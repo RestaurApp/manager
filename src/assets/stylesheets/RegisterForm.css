@@ -1,0 +1,49 @@
+.RegisterForm {
+  padding: 2rem;
+  max-width: 20rem;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid rgba(128, 128, 128, 0.377);
+  border-radius: 5px;
+}
+
+.RegisterForm form .form-group input {
+  border-radius: 2rem;
+  background: none !important;
+  border: 1px solid var(--red-color);
+  color: white;
+}
+
+.RegisterForm form .Buttons-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.RegisterForm form .Buttons-container button {
+  background-color: var(--red-color);
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  border-radius: 2rem;
+  color: white;
+}
+
+RegisterForm form .Buttons-container button:hover {
+  background-color: var(--red-color);
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  border-radius: 2rem;
+  color: white;
+}
+
+.RegisterForm .logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.RegisterForm .logo-container img {
+  width: auto;
+  max-width: 150px;
+  height: auto;
+  max-height: 100px;
+}
