@@ -1,5 +1,17 @@
 @import './assets/stylesheets/variables.css'; 
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}
+
+.form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+} 
+
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif !important;

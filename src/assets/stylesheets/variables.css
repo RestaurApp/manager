@@ -1,4 +1,8 @@
 :root {
   --dark-color: #0a1925;  
-  --red-color: #eb495d
+  --red-color: #eb495d;
+  --dark-gray: #4a4a4a;
+  --light-red: #f58d8d;
+  --light-gray: #b4b4b4;
+  --super-light-gray: #ececec;
 }

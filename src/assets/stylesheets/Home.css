@@ -1,0 +1,19 @@
+.Home {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Home img {
+  margin-bottom: 2rem;
+  max-width: 20rem;
+}
+
+.Home .Button {
+  width: 100%;
+  margin-bottom: 1rem;
+  max-width: 20rem;
+}
