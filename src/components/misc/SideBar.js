@@ -1,29 +1,30 @@
 import React from 'react';
 import '../../assets/stylesheets/SideBar.css'
+import UserImg from '../../assets/img/img_cook_hat.svg'
 
 const SideBar = () => {
   return (
     <nav id="sidebar">
       <div className="custom-menu">
-        <button type="button" id="sidebarCollapse" className="btn btn-primary">
-        </button>
+
       </div>
       <div className="img bg-wrap text-center py-4" >
         <div className="user-logo">
-          <div className="img"></div>
+          <div className="img" style={{ backgroundImage: `url(${UserImg}`}}></div>
           <h3>Catriona Henderson</h3>
         </div>
       </div>
       <ul className="list-unstyled components mb-5">
         <li className="active">
-          <a href="/#"><span className="fa fa-home mr-3"></span> Home</a>
+          <a href="/#"><i className="icon-user mr-2"/>Perfil de usuario</a>
         </li>
-        <li>
-            <a href="/#"><span className="fa fa-download mr-3 notif"><small className="d-flex align-items-center justify-content-center">5</small></span> Download</a>
+        <li className="">
+          <a href="/#"><i className="icon-food mr-2"/>Menus activos</a>
         </li>
-        <li>
-          <a href="/#"><span className="fa fa-gift mr-3"></span> Gift Code</a>
+        <li className="">
+          <a href="/#"><i className="icon-user mr-2"/>Home</a>
         </li>
+
       </ul>
     </nav>
   );

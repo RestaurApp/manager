@@ -1,0 +1,13 @@
+{
+  "svgsSourceDir": "./src/assets/fonts/svg",
+  "fontsDestDir": "./src/assets/fonts/font",
+  "stylesDestDir": "./src/assets/fonts/css",
+  "fontelloConfig": {
+    "ascent": 850,
+    "units_per_em": 1000,
+    "hinting": true,
+    "css_use_suffix": false,
+    "css_prefix_text": "icon-",
+    "name": "font"
+  }
+}

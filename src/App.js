@@ -4,6 +4,7 @@ import Home from './screens/Home';
 import './App.css';
 import Register from './screens/Register';
 import DashBoard from './screens/DashBoard';
+import './assets/fonts/css/font.css'
 
 
 function App() {
