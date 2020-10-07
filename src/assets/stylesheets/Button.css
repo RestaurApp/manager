@@ -1,9 +1,23 @@
 .Button-primary {
   background-color: var(--red-color);
-  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem !important;
   border-radius: 2rem;
   color: white;
   border: none;
+}
+
+a.Button-primary {
+  display: block;
+}
+
+a.Button-primary:hover {
+  color: white;
+  text-decoration: none;
+}
+
+a.Button-primary.outline:hover  {
+  color: var(--red-color);
+  text-decoration: none;
 }
 
 .Button-primary.outline  {

@@ -11,7 +11,7 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="col-12 mb-4">
-            <h2 className="StepOneTitle">Crea tu cuenta con <span>MyMenus</span></h2>
+            <h2 className="StepOneTitle">Crea tu restaurante con <span>MyMenus</span></h2>
             <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
           </div>  
           <div className="col">

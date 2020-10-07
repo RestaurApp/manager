@@ -11,6 +11,10 @@
   border-radius: 5px;
 }
 
+.ErrorMessage {
+  margin-bottom: -1rem;
+} 
+
 .StepOneTitle {
   color: var(--dark-gray);
 }

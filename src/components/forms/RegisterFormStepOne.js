@@ -1,24 +1,32 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import '../../assets/stylesheets/RegisterForm.css'
 import Button from "../misc/Button";
+import { registerUser } from '../../services/AuthService'
+import '../../assets/stylesheets/RegisterForm.css'
 
 const RegisterForm = ({ setStep }) => {
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = values => console.log(values);
 
-
-  // const handleSubmit = () => {
-  //   //submit del back y el then haxer un setStep()
-  // }
+  const onSubmit = values => {
+    console.log('values', values)
+    registerUser(values)
+      .then(user => {
+        console.log(user)
+        setStep(2)
+      })
+      .catch((e) => console.log(e))
+  };
+  
   return (
     <div className="RegisterForm">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-100">
         <div className="row">
           <div className="col-12 mb-4">
             <h2 className="StepOneTitle">Crea tu cuenta con <span>MyMenus</span></h2>
             <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
           </div> 
+        </div>
+        <div className="row mb-3">
           <div className="col">
             <label htmlFor="name">Name</label>
             <input
@@ -26,8 +34,9 @@ const RegisterForm = ({ setStep }) => {
               placeholder="Nombre"
               className="form-control"
               name="name"
+              ref={register({ required: true })}
             />
-            <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
+           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
           </div>
           <div className="col">
             <label htmlFor="lastName">Last Name</label>
@@ -37,20 +46,20 @@ const RegisterForm = ({ setStep }) => {
               name="lastName"
               ref={register({ required: true })}
             />
-            {errors.lastName && <p className="text-danger text-left">requiered filed</p> }
+            {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
           </div>
         </div>
 
-        <div className="row">
+        <div className="row mb-3">
           <div className="col">
             <label htmlFor="phone">Phone</label>
             <input
               placeholder="phone"
               className="form-control"
               name="phone"
-              ref={register()}
+              ref={register({ required: true })}
             />
-            <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
+            {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>}
           </div>
           <div className="col">
             <label htmlFor="email">Email address</label>
@@ -66,10 +75,9 @@ const RegisterForm = ({ setStep }) => {
                 }
               })}
             />
-            <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
+            <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
           </div>
         </div>
-
         <div className="row">
           <div className="col">
             <label htmlFor="password">Password</label>
@@ -86,10 +94,9 @@ const RegisterForm = ({ setStep }) => {
                 }
               })}
             />
-            <p className="text-danger text-left">{errors.password && errors.password.message}</p>
+            <p className="ErrorMessage text-danger mb-0 text-left">{errors.password && errors.password.message}</p>
           </div>
         </div>
-      
         <div className="Buttons-container">
           <Button type="primary" buttonType="submit" text="Submit"/>
         </div>

@@ -1,0 +1,27 @@
+.LoginForm {
+  padding: 1rem 0rem 0rem 0rem;
+  width: 20rem;
+}
+
+.Login-wrapper {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 0.5rem;
+}
+
+.Login {
+  background-color: var(--red-color);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.Login img {
+  max-width: 20rem;
+}
