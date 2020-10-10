@@ -1,8 +1,11 @@
 :root {
+  --gray: #4c4c53;
+  --gray-text: #666666;
   --dark-color: #0a1925;  
   --red-color: #eb495d;
   --dark-gray: #4a4a4a;
   --light-red: #f58d8d;
   --light-gray: #b4b4b4;
+  --light-gray-2: #dddddd;
   --super-light-gray: #ececec;
 }

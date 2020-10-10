@@ -1,0 +1,6 @@
+.WhiteBox {
+  background: white;
+  border: 1px solid var(--light-gray-2);
+  border-radius: 4px;
+  padding: 4rem 6rem;
+}

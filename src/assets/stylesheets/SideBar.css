@@ -11,11 +11,7 @@
   height: 100vh;
   min-width: 300px;
   max-width: 300px;
-  position: relative;
-  -webkit-box-shadow: 5px 0px 98px -82px rgba(0,0,0,0.75);
--moz-box-shadow: 5px 0px 98px -82px rgba(0,0,0,0.75);
-box-shadow: 5px 0px 98px -82px rgba(0,0,0,0.75);
-
+  position: fixed;
 }
 
   #sidebar.active {

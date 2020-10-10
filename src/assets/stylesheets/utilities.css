@@ -1,0 +1,11 @@
+.c-red {
+  color: var(--light-red)
+}
+
+.c-dark-gray {
+  color: var(--dark-gray)
+}
+
+.c-gray {
+  color: var(--gray)
+}

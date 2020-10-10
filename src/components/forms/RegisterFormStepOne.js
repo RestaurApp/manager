@@ -8,7 +8,6 @@ const RegisterForm = ({ setStep }) => {
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = values => {
-    console.log('values', values)
     registerUser(values)
       .then(user => {
         console.log(user)

@@ -1,4 +1,5 @@
 @import './assets/stylesheets/variables.css'; 
+@import './assets/stylesheets/utilities.css'; 
 
 input:focus,
 select:focus,
@@ -10,7 +11,11 @@ button:focus {
 .form-control:focus {
   border-color: #28a745;
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-} 
+}
+
+p {
+  color: var(--gray-text)
+}
 
 body {
   margin: 0;

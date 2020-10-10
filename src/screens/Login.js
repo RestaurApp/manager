@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import IntroHome from '../assets/img/introHome.svg'
 import BackGroundLogin from '../assets/img/bg.jpg'
 import Button from '../components/misc/Button';
 import { useForm } from 'react-hook-form';
-
-import '../assets/stylesheets/Login.css'
+import { loginUser } from '../services/AuthService';
+import AuthContext from '../contexts/AuthContext';
 import '../assets/stylesheets/RegisterForm.css'
+import '../assets/stylesheets/Login.css'
 
 const Home = () => {
   const { handleSubmit, register, errors } = useForm();
+  const { setAuthUser } = useContext(AuthContext) 
 
   const onSubmit = values => {
-    console.log('values', values)
+    loginUser(values)
+      .then(result => {
+        setAuthUser(result.data.userInfo)
+      })
+      .catch(err => console.log(err))
   };
   
   return (
@@ -46,13 +52,7 @@ const Home = () => {
                   className="form-control"
                   placeholder="Enter password"
                   name="password"
-                  ref={register({
-                    required: "Required",
-                    minLength: {
-                      value: 5,
-                      message: "min length is 5"
-                    }
-                  })}
+                  ref={register()}
                 />
                 <p className="ErrorMessage text-danger mb-0 text-left">{errors.password && errors.password.message}</p>
               </div>
