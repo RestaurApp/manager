@@ -1,8 +1,10 @@
 import React from 'react';
 import UserImg from '../../assets/img/img_cook_hat.svg'
 import '../../assets/stylesheets/SideBar.css'
+import { Link } from 'react-router-dom';
 
-const SideBar = () => {
+const SideBar = ({ activeTab }) => {
+
   return (
     <nav id="sidebar">
       <div className="img bg-wrap text-center py-4" >
@@ -12,14 +14,14 @@ const SideBar = () => {
         </div>
       </div>
       <ul className="list-unstyled components mb-5">
-        <li className="active c-gray">
-          <a href="/#"><i className="icon-user mr-2"/>Perfil de usuario</a>
+        <li className={`c-gray ${activeTab === 1 ? 'active' : ''}`}>
+          <Link to="/dashboard"><i className="icon-user mr-2"/>Home</Link>
         </li>
-        <li className="c-gray">
-          <a href="/#"><i className="icon-food mr-2"/>Menus activos</a>
+        <li className={`c-gray ${activeTab === 2 ? 'active' : ''}`}>
+          <Link to="/mymenus"><i className="icon-food mr-2"/>Menus activos</Link>
         </li>
-        <li className="c-gray ">
-          <a href="/#"><i className="icon-user mr-2"/>Home</a>
+        <li className={`c-gray ${activeTab === 3 ? 'active' : ''}`}>
+          <Link to="/profile"><i className="icon-user mr-2"/>perfil</Link>
         </li>
       </ul>
     </nav>

@@ -1,0 +1,16 @@
+.MyMenus .content {
+  background-color: #f6f6f6;
+  margin-left: 300px;
+}
+
+.MenusList .add-menu-img {
+  width: 100%;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.MenusList .add-menu-img:hover {
+  width: 100%;
+  opacity: 0.8;
+}

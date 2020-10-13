@@ -6,8 +6,7 @@ import DashBoard from './screens/DashBoard';
 import Login from './screens/Login';
 import './assets/fonts/css/font.css'
 import './App.css';
-
-
+import MyMenus from './screens/MyMenus';
 
 function App() {
   return (
@@ -17,6 +16,7 @@ function App() {
         <Route exact path='/register' component={Register}/>
         <Route exact path='/login' component={Login}/>
         <Route exact path='/dashboard' component={DashBoard}/>
+        <Route exact path='/mymenus' component={MyMenus}/>
         <Redirect to='/'/> 
       </Switch>
     </div>
