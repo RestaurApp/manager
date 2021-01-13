@@ -10,7 +10,29 @@
   transition: 0.2s;
 }
 
+.MenusList .menu-img {
+  width: 100%;
+}
+
+.MenusList .menu-wrapper {
+  opacity: 0.6;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.MenusList .menu-name {
+  font-size: 0.85rem;
+  text-align: center;
+  padding-top: 0.25rem;
+  font-weight: 500;
+}
+
 .MenusList .add-menu-img:hover {
+  width: 100%;
+  opacity: 0.8;
+}
+
+.MenusList .menu-wrapper:hover {
   width: 100%;
   opacity: 0.8;
 }

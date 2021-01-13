@@ -17,6 +17,7 @@ function App() {
         <Route exact path='/login' component={Login}/>
         <Route exact path='/dashboard' component={DashBoard}/>
         <Route exact path='/mymenus' component={MyMenus}/>
+        
         <Redirect to='/'/> 
       </Switch>
     </div>

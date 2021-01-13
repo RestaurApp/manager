@@ -9,3 +9,10 @@
 .c-gray {
   color: var(--gray)
 }
+
+input.form-control, select {
+  border-radius: 0rem;
+  background: none !important;
+  border-radius: none !important;
+  border: 1px solid var(--super-light-gray);
+}

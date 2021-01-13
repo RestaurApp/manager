@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import SideBar from '../components/misc/SideBar';
 import WhiteBox from '../components/misc/WhiteBox';
 import Card from '../components/misc/Card';
 import CreateMenuImg from './../assets/img/mobile_menu.png'
 import seeMenusImg from './../assets/img/food_list.svg'
 import './../assets/stylesheets/DashBoard.css'
+import AuthContext from '../contexts/AuthContext';
 
 const DashBoard = () => {
+  const { currentUser } = useContext(AuthContext) 
+
   return (
     <div className="DashBoard wrapper d-flex align-items-stretch">
       <SideBar activeTab={1} />
       <div id="content" className="p-4 p-md-5 pt-5">
         <WhiteBox >
-          <h2 className="mb-4 c-dark-gray">Hola de nuevo <span className="c-red">Catriona!</span></h2>
+          <h2 className="mb-4 c-dark-gray">Hola de nuevo <span className="c-red">{currentUser.name}</span></h2>
           <p>
             It's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
           </p>

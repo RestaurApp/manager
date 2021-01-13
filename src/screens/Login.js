@@ -7,18 +7,24 @@ import { loginUser } from '../services/AuthService';
 import AuthContext from '../contexts/AuthContext';
 import '../assets/stylesheets/RegisterForm.css'
 import '../assets/stylesheets/Login.css'
+import { Redirect } from 'react-router-dom';
 
 const Home = () => {
   const { handleSubmit, register, errors } = useForm();
-  const { setAuthUser } = useContext(AuthContext) 
+  const { setAuthUser, currentUser } = useContext(AuthContext) 
 
   const onSubmit = values => {
     loginUser(values)
       .then(result => {
         setAuthUser(result.data.userInfo)
+        
       })
       .catch(err => console.log(err))
   };
+
+  if (currentUser) {
+    return <Redirect to="/dashboard"/>
+  }
   
   return (
     <div className="Login" style={{ background: `url(${BackGroundLogin})`}}>
