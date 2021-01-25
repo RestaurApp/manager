@@ -4,9 +4,10 @@ import Home from './screens/Home';
 import Register from './screens/Register';
 import DashBoard from './screens/DashBoard';
 import Login from './screens/Login';
-import './assets/fonts/css/font.css'
-import './App.css';
 import MyMenus from './screens/MyMenus';
+import MyDishes from './screens/MyDishes';
+import './App.css';
+import './assets/fonts/css/font.css'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/login' component={Login}/>
         <Route exact path='/dashboard' component={DashBoard}/>
         <Route exact path='/mymenus' component={MyMenus}/>
+        <Route exact path='/mydishes' component={MyDishes}/>
         
         <Redirect to='/'/> 
       </Switch>

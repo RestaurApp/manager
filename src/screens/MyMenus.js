@@ -59,7 +59,8 @@ const MyMenus = () => {
           </div>
         </WhiteBox>
         {showModal &&
-          <Modal 
+          <Modal
+            id="create-menu-modal"
             title="Modal" 
             description="It's simply dummy text of the printing and typesetting industry." 
             onCloseModal={() => setShowModal(false)}

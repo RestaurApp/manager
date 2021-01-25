@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import '../../assets/stylesheets/MenuForm.css'
+import AnimatedMulti from "./MultiSelect";
+import Button from "../misc/Button";
 
 const MenuForm = () => {
   const { register, errors, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => console.log(data, firstDish);
+  const [firstDish, setFirstDish] = useState([])
+  const [secondtDish, setSecondDish] = useState([])
+  const [dessert, setDessert] = useState([])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -38,7 +43,6 @@ const MenuForm = () => {
                 <option value="Sunday">Domingo</option>
               </select>
             </div>
-
             {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
           </div>
         </div>
@@ -50,7 +54,7 @@ const MenuForm = () => {
               placeholder="Precio en €"
               className="form-control"
               name="price"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
             />
           </div>
         </div>
@@ -58,39 +62,29 @@ const MenuForm = () => {
           <h4 className="mb-3">Elige los platos del menú</h4>
           <div className="row mb-3">
           <div className="col-12 mb-3">
-            <label htmlFor="price">Primero</label>
-            <input
-              type="text"
-              placeholder="Primer Plato"
-              className="form-control"
-              name="first"
-              ref={register({ required: true })}
+            <label htmlFor="price">First</label>
+            <AnimatedMulti
+              name="First"
+              onChangeFn={setFirstDish}
             />
           </div>
           <div className="col-12 mb-3">
-            <label htmlFor="price">Primero</label>
-            <input
-              type="text"
-              placeholder="Primer Plato"
-              className="form-control"
-              name="second"
-              ref={register({ required: true })}
+            <label htmlFor="price">Segundo</label>
+            <AnimatedMulti
+              name="Second"
+              onChangeFn={setSecondDish}
             />
           </div>
           <div className="col-12 mb-3">
             <label htmlFor="price">Postre</label>
-            <input
-              type="text"
-              placeholder="Postre"
-              className="form-control"
-              name="dessert"
-              ref={register({ required: true })}
+            <AnimatedMulti
+              name="Second"
+              onChangeFn={setDessert}
             />
           </div>
         </div>
         </div>
-      
-      <input type="submit" />
+        <Button buttonType="submit" text="Crear" type="primary" />
     </form>
   );
 }

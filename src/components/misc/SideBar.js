@@ -21,6 +21,9 @@ const SideBar = ({ activeTab }) => {
           <Link to="/mymenus"><i className="icon-food mr-2"/>Menus activos</Link>
         </li>
         <li className={`c-gray ${activeTab === 3 ? 'active' : ''}`}>
+          <Link to="/mydishes"><i className="icon-food mr-2"/>Platos Activos</Link>
+        </li>
+        <li className={`c-gray ${activeTab === 4 ? 'active' : ''}`}>
           <Link to="/profile"><i className="icon-user mr-2"/>perfil</Link>
         </li>
       </ul>

@@ -16,8 +16,8 @@ const Home = () => {
   const onSubmit = values => {
     loginUser(values)
       .then(result => {
-        setAuthUser(result.data.userInfo)
-        
+        console.log(result)
+        setAuthUser({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken})
       })
       .catch(err => console.log(err))
   };

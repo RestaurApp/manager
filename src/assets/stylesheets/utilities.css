@@ -2,6 +2,14 @@
   color: var(--light-red)
 }
 
+.bg-red {
+  background-color: var(--light-red) !important;
+}
+
+.border-red {
+  border: 1px solid var(--light-red) !important;
+}
+
 .c-dark-gray {
   color: var(--dark-gray)
 }
@@ -9,6 +17,15 @@
 .c-gray {
   color: var(--gray)
 }
+
+.c-white {
+  color: white !important;
+}
+
+.text-small {
+  font-size: 0.8rem;
+}
+
 
 input.form-control, select {
   border-radius: 0rem;

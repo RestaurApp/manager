@@ -6,9 +6,16 @@ import CreateMenuImg from './../assets/img/mobile_menu.png'
 import seeMenusImg from './../assets/img/food_list.svg'
 import './../assets/stylesheets/DashBoard.css'
 import AuthContext from '../contexts/AuthContext';
+import { Redirect } from 'react-router-dom';
 
 const DashBoard = () => {
   const { currentUser } = useContext(AuthContext) 
+  const [myMenus, setMymenus] = useState(false)
+  const [myDishes, setMydishes] = useState(false)
+
+  if (myMenus) return <Redirect to="/mymenus"/>
+
+  if (myDishes) return <Redirect to="/mydishes"/>
 
   return (
     <div className="DashBoard wrapper d-flex align-items-stretch">
@@ -22,7 +29,7 @@ const DashBoard = () => {
           <div className="row mt-5">
             <div className="col-6">
               <Card
-                action="TODO-REDIRECT TO MENUS-CREATION"
+                action={() => setMymenus(true)}
                 img={{ src: CreateMenuImg, alt: 'create menu' }}
                 title="Configura tu menú"
                 description="Crea platos, menús, ofertas y secciones para tus comensales."
@@ -30,7 +37,7 @@ const DashBoard = () => {
             </div>
             <div className="col-6">
               <Card
-                action="TODO-REDIRECT TO MENUS-LIST"
+                action={() => setMydishes(true)}
                 img={{ src: seeMenusImg, alt: 'create menu' }}
                 title="Configura tu menú"
                 description="Crea platos, menús, ofertas y secciones para tus comensales."

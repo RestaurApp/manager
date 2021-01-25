@@ -12,6 +12,12 @@
 }
 
 .Modal .ModalHeader {
+  padding-top: 0.5rem;
+  background-color: white;
+  padding-bottom: 0.25rem;
+}
+
+.Modal#create-menu-modal .ModalHeader  {
   position: sticky;
   top: -2rem;
   padding-top: 1.5rem;
@@ -20,10 +26,21 @@
   padding-bottom: 0.25rem;
 }
 
-.Modal .Modal-dialog {
+.Modal#create-menu-modal .Modal-dialog  {
   position: relative;
   max-height: 90%;
   overflow-y: scroll;
+  width: 34.66rem;
+  padding: 1.6rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 2px solid var(--light-red);
+  border-radius: 4px;
+}
+
+.Modal .Modal-dialog {
+  position: relative;
+  max-height: 90%;
   width: 34.66rem;
   padding: 1.6rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
@@ -66,7 +83,7 @@
 .Modal .Modal-dialog .Modal-body {
   font-size: .93rem;
   color: var(--dark-gray);
-  padding: 1rem 0 2rem 0;
+  padding: 1rem 0 1rem 0;
 }
 
 .Modal .Modal-dialog .Modal-body .Modal-description {

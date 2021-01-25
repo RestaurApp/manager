@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Button from './Button';
-import useClickOutside from '../../hooks/useClickOutside';
+// import useClickOutside from '../../hooks/useClickOutside';
 import '../../assets/stylesheets/Modal.css'
 
 
@@ -11,16 +11,17 @@ const ModalContent = ({
     description,
     onCloseModal,
     cancelBtnOptions, 
-    acceptBtnOptions,   
+    acceptBtnOptions,
+    id, 
     lg,
   }) => {
 
   const wrapper = useRef(null);
 
-  useClickOutside(wrapper, onCloseModal);
+  // useClickOutside(wrapper, onCloseModal);
 
   return (
-    <div className="Modal">
+    <div className="Modal" id={id}>
       <div className={`Modal-dialog ${lg ? 'Modal-lg' : ''}`} ref={wrapper}>
         <div className="ModalHeader">
           <h2 className="Modal-title">
