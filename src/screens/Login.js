@@ -17,6 +17,7 @@ const Home = () => {
     loginUser(values)
       .then(result => {
         console.log(result)
+        localStorage.setItem('restaurappUser', JSON.stringify({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken}));
         setAuthUser({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken})
       })
       .catch(err => console.log(err))

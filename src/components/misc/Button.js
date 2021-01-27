@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import '../../assets/stylesheets/Button.css'
 
 const Button = (props) => {
-  const { buttonType, text, action, type, outline } = props
+  const { buttonType, text, action, type, outline, small } = props
   return typeof action !== 'string'
     ? 
       <button 
-        className={`Button Button-${type} ${outline ? 'outline' : ''}`} 
+        className={`Button Button-${type} ${outline ? 'outline' : ''} ${small ? 'smallBtn' : ''}`} 
         type={buttonType} 
         onClick={action}
       >

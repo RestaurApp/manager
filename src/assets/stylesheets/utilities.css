@@ -6,12 +6,24 @@
   background-color: var(--light-red) !important;
 }
 
+.bg-cancel {
+  background-color: var(--cancel) !important;
+}
+
 .border-red {
   border: 1px solid var(--light-red) !important;
 }
 
 .c-dark-gray {
   color: var(--dark-gray)
+}
+
+.c-light-green {
+  color: var(--light-green)
+}
+
+.bg-light-green {
+  background-color: var(--light-green)
 }
 
 .c-gray {

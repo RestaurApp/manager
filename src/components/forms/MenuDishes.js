@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../misc/Button";
 import AnimatedMulti from "./MultiSelect";
+import { ALLERGENS } from "../../constants/constants";
+import { postProduct } from "../../services/ProductService";
 
-const RegisterDishesForm = ({ category }) => {
+const RegisterDishesForm = ({ category, onSubmitCb }) => {
   const { handleSubmit, register, errors } = useForm();
   const [allergens, setAllergens] = useState([])
 
@@ -11,8 +13,21 @@ const RegisterDishesForm = ({ category }) => {
     const dataAllergens = allergens.reduce((acc, allergen) => {
       return [...acc, allergen.value]
     }, [])
-    const data = { ...values, allergens: dataAllergens, category: category.id }
-    console.log(data)
+
+    const data = { 
+      ...values, 
+      allergens: dataAllergens, 
+      category: category.id, 
+      type: 'esto hay que borrarlo' 
+    }
+
+    postProduct(data)
+      .then(result => {
+        console.log(result)
+        onSubmitCb()
+      })
+      .catch(e => console.log(e))
+
   };
   
   return (
@@ -61,6 +76,7 @@ const RegisterDishesForm = ({ category }) => {
             <div className="d-flex flex-column">
               <label htmlFor="lastName">Alergenos del plato</label>
               <AnimatedMulti
+                options={ALLERGENS}
                 name="Second"
                 onChangeFn={setAllergens}
               />

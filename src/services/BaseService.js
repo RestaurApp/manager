@@ -8,7 +8,7 @@ const http = axios.create({
 const localStorageUser = JSON.parse(localStorage.getItem('restaurappUser'))
 
 const localStorageToken = localStorageUser ? localStorageUser.token : ''
-
+console.log(localStorageToken)
 http.interceptors.request.use(
   async (config) => {
     config.headers = {

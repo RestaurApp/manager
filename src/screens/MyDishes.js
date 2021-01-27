@@ -3,15 +3,15 @@ import SideBar from '../components/misc/SideBar';
 import WhiteBox from '../components/misc/WhiteBox';
 import DefaultImg from '../assets/img/default-img.png'
 import Modal from '../components/misc/Modal';
-import TableRow from '../components/misc/TableRow';
+import DishRow from '../components/misc/DishRow';
 import RegisterDishesForm from '../components/forms/MenuDishes';
 import useFetchWithLoading from '../hooks/useFetchWithLoading';
 import { getProducts, getProductsFromCategory } from '../services/ProductService';
 import { getCategories } from '../services/CategoryService';
 import SpinnerModal from '../components/misc/SpinnerModal';
 import Button from '../components/misc/Button';
-import '../assets/stylesheets/MyDishes.css'
 import CategoryForm from '../components/forms/CategoryForm';
+import '../assets/stylesheets/MyDishes.css'
 
 const MyMenus = () => {
   const [showModal, setShowModal] = useState(false)
@@ -19,9 +19,10 @@ const MyMenus = () => {
   const [dishes, setDishes] = useState([])
   const [currentCategory, setCurrentCategory] = useState(null)
   const [showForm, setShowForm] = useState(false)
-
+  
   const handleShowModal = (category) => {
     setCurrentCategory(category)
+
     getProductsFromCategory(category.id)
       .then((results) => {
         setShowModal(true)
@@ -98,14 +99,20 @@ const MyMenus = () => {
             cancelBtn="hola"
           >
             {showForm
-              ? <RegisterDishesForm category={currentCategory} />
+              ? <RegisterDishesForm 
+                  category={currentCategory} 
+                  onSubmitCb={() => {
+                    setShowModal(false)
+                    setShowForm(false)
+                  }}
+                />
               : <div>
                 <WhiteBox extraClassNames="DishesList px-3 py-1">
                   {dishes.length
                     ? dishes.map((dish, i) => {
-                      return <TableRow key={i} title={dish.name} />
+                      return <DishRow key={i} title={dish.name} />
                     })
-                    : "Está categoría no tiene platos asignados"
+                    : <p className="m-0 text-center p-2">"Está categoría no tiene platos asignados"</p>
                   }
                 </WhiteBox>
                 <button
