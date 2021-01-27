@@ -23,8 +23,11 @@ const SideBar = ({ activeTab }) => {
         <li className={`c-gray ${activeTab === 3 ? 'active' : ''}`}>
           <Link to="/mydishes"><i className="icon-food mr-2"/>Platos Activos</Link>
         </li>
+        <li className={`c-gray ${activeTab === 5 ? 'active' : ''}`}>
+          <Link to="/mytables"><i className="icon-user mr-2"/>Mesas</Link>
+        </li>
         <li className={`c-gray ${activeTab === 4 ? 'active' : ''}`}>
-          <Link to="/profile"><i className="icon-user mr-2"/>perfil</Link>
+          <Link to="/profile"><i className="icon-user mr-2"/>Perfil</Link>
         </li>
       </ul>
     </nav>

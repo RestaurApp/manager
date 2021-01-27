@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Button from "../misc/Button";
 import AnimatedMulti from "./MultiSelect";
 
-const RegisterDishesForm = () => {
+const RegisterDishesForm = ({ category }) => {
   const { handleSubmit, register, errors } = useForm();
   const [allergens, setAllergens] = useState([])
 
@@ -11,7 +11,7 @@ const RegisterDishesForm = () => {
     const dataAllergens = allergens.reduce((acc, allergen) => {
       return [...acc, allergen.value]
     }, [])
-    const data = { ...values, allergens: dataAllergens }
+    const data = { ...values, allergens: dataAllergens, category: category.id }
     console.log(data)
   };
   
@@ -29,16 +29,6 @@ const RegisterDishesForm = () => {
               ref={register({ required: true })}
             />
            {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
-          </div>
-          <div className="col">
-            <label htmlFor="lastName">Type</label>
-            <input
-              placeholder="tipo"
-              className="form-control"
-              name="type"
-              ref={register({ required: true })}
-            />
-            {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
           </div>
         </div>
 

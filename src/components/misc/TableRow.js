@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/stylesheets/TableRow.css'
 
-const TableRow = ({img, body, action}) => {
+const TableRow = ({img, title, action}) => {
   return (
     <div className="TableRow row">
       <div className="ImgTableRow col-2">
@@ -9,7 +9,7 @@ const TableRow = ({img, body, action}) => {
 
         </div>
       </div>
-      <div className="BodyTableRow col-8">Description of the product</div>
+      <div className="BodyTableRow col-8">{title}</div>
       <div className="ActionTableRow col-2">edit</div>
     </div>
   );

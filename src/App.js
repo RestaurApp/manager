@@ -8,6 +8,7 @@ import MyMenus from './screens/MyMenus';
 import MyDishes from './screens/MyDishes';
 import './App.css';
 import './assets/fonts/css/font.css'
+import MyTables from './screens/MyTables';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path='/dashboard' component={DashBoard}/>
         <Route exact path='/mymenus' component={MyMenus}/>
         <Route exact path='/mydishes' component={MyDishes}/>
+        <Route exact path='/mytables' component={MyTables}/>
         
         <Redirect to='/'/> 
       </Switch>
