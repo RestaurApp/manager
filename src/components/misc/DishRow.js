@@ -11,10 +11,7 @@ const DefaultRow = ({ title, setShowModal, addRow, addDishAction, dishId }) => {
     <div className="BodyTableRow col-7">{title}</div>
       {!addRow 
         ? 
-        <div className="ActionTableRow col-3 d-flex align-items-center ">
-          <div className="DishRowButton bg-light-green  mr-1" onClick={() => {}}>
-            <i className="icon-pencil"/>
-          </div>
+        <div className="ActionTableRow col-3 d-flex justify-content-end ">
           <div className="DishRowButton bg-cancel" onClick={() => setShowModal(true)}>
             <i className="icon-cancel"/>
           </div>

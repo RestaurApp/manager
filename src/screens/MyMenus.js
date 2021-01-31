@@ -62,7 +62,7 @@ const MyMenus = () => {
             onCloseModal={() => setShowModal(false)}
             cancelBtn="hola"
           >
-            <MenuForm />
+            <MenuForm onPost={() => setShowModal(false)}/>
           </Modal>
         }
       </div>

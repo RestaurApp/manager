@@ -19,7 +19,7 @@ const MyDishes = () => {
   const [showForm, setShowForm] = useState(false)
   const [showEditForm, setShowEditForm] = useState(false)
   const [currentDish, setCurrentDish] = useState('')
-
+  
   const deleteDish = (id) => {
     deleteProduct(id)
       .then(product => {
