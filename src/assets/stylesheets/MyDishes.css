@@ -1,4 +1,49 @@
-.DishesList {
-  overflow-y: scroll;
-  max-height: 350px;
+.MyDishTable {
+  width: 100%;
+}
+
+.Dish-td-name, .Dish-td-category {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.DishRowButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: baseline;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 100%;
+}
+
+.NoDishMessage {
+  color: var(--light-gray);
+  padding-top: 1rem;
+}
+
+.DishStateCircle {
+  width: 12px;
+  height: 12px;
+  margin-left: 5px;
+  background-color: var(--super-light-gray);
+  border-radius: 100%;
+}
+
+.MyDishTable thead {
+  border-bottom: 2px solid var(--red);
+  color: white;
+  background-color: var(--light-red)
+}
+
+.MyDishTable thead th {
+  padding: 1rem 0rem;
+}
+
+.TableDishRow td {
+  padding: 1rem 0rem;
 }

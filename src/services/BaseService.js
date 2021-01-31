@@ -5,15 +5,11 @@ const http = axios.create({
   withCredentials: true
 });
 
-const localStorageUser = JSON.parse(localStorage.getItem('restaurappUser'))
-
-const localStorageToken = localStorageUser ? localStorageUser.token : ''
-console.log(localStorageToken)
 http.interceptors.request.use(
   async (config) => {
     config.headers = {
       ...config.headers,
-      Authorization: localStorageToken,
+      Authorization: JSON.parse(localStorage.getItem('restaurappUser'))?.token ,
       'Content-Type': 'application/json',
     };
     return config;

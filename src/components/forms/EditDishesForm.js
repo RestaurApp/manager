@@ -3,11 +3,23 @@ import { useForm } from "react-hook-form";
 import Button from "../misc/Button";
 import AnimatedMulti from "./MultiSelect";
 import { ALLERGENS } from "../../constants/constants";
-import { postProduct } from "../../services/ProductService";
+import { updateProduct } from "../../services/ProductService";
 
-const RegisterDishesForm = ({ onSubmitCb }) => {
-  const { handleSubmit, register, errors } = useForm();
-  const [allergens, setAllergens] = useState([])
+const EditDishesForm = ({ onSubmitCb, dish }) => {
+
+  const defaultAllergens = dish.allergens.map(allergen => { return { value: allergen, label: allergen }})
+
+  const defaultValues = {
+    name: dish.name,
+    price: dish.price,
+    description: dish.description
+  }
+
+  const { handleSubmit, register, errors } = useForm({
+    defaultValues: defaultValues
+  });
+
+  const [allergens, setAllergens] = useState(defaultAllergens)
 
   const onSubmit = values => {
     const dataAllergens = allergens.reduce((acc, allergen) => {
@@ -20,15 +32,16 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
       type: 'esto hay que borrarlo' 
     }
 
-    postProduct(data)
+    console.log(data)
+
+    updateProduct(data, dish.id)
       .then(result => {
-        console.log(result)
         onSubmitCb(result.data)
       })
       .catch(e => console.log(e))
 
   };
-  
+  console.log(dish)
   return (
     <div className="RegisterDishesForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -76,6 +89,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               <label htmlFor="lastName">Alergenos del plato</label>
               <AnimatedMulti
                 options={ALLERGENS}
+                defaultValue={defaultAllergens}
                 name="Second"
                 onChangeFn={setAllergens}
               />
@@ -91,4 +105,4 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
   );
 };
 
-export default RegisterDishesForm
+export default EditDishesForm

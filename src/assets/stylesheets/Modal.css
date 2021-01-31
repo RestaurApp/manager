@@ -91,7 +91,7 @@
   color: var(--dark-gray);
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 3000px) {
   .Modal {
     width: calc(100% - var(--sidemenu-width-lg));
     left: var(--sidemenu-width-lg)

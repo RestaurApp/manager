@@ -9,7 +9,7 @@ const CategoryForm = ({ callBack }) => {
   const onSubmit = (values) => {
     createCategory(values)
       .then((result) => {
-        callBack(false)
+        callBack(result)
         console.log(result)
       })
       .catch((e) => console.log(e))

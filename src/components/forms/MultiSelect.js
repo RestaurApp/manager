@@ -5,7 +5,7 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-const AnimatedMulti = ({ onChangeFn, options}) => {
+const AnimatedMulti = ({ onChangeFn, options, defaultValue = []}) => {
   const formattedOptions =  options.map(option => { 
     return { value: option, label: option }
   })
@@ -13,7 +13,7 @@ const AnimatedMulti = ({ onChangeFn, options}) => {
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
-      defaultValue={[]}
+      defaultValue={defaultValue}
       isMulti
       options={formattedOptions}
       onChange={(value) => onChangeFn(value)}

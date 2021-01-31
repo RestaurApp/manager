@@ -18,10 +18,13 @@ const SideBar = ({ activeTab }) => {
           <Link to="/dashboard"><i className="icon-user mr-2"/>Home</Link>
         </li>
         <li className={`c-gray ${activeTab === 2 ? 'active' : ''}`}>
-          <Link to="/mymenus"><i className="icon-food mr-2"/>Menus activos</Link>
+          <Link to="/mymenus"><i className="icon-food mr-2"/>Menus</Link>
         </li>
         <li className={`c-gray ${activeTab === 3 ? 'active' : ''}`}>
-          <Link to="/mydishes"><i className="icon-dish mr-2"/>Platos Activos</Link>
+          <Link to="/mydishes"><i className="icon-dish mr-2"/>Platos</Link>
+        </li>
+        <li className={`c-gray ${activeTab === 4 ? 'active' : ''}`}>
+          <Link to="/mycategories"><i className="icon-dish mr-2"/>Categorías</Link>
         </li>
         <li className={`c-gray ${activeTab === 5 ? 'active' : ''}`}>
           <Link to="/mytables"><i className="icon-table mr-2"/>Mesas</Link>

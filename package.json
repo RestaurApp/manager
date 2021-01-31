@@ -16,8 +16,11 @@
     "react-dom": "^16.13.1",
     "react-dropdown-select": "^4.7.3",
     "react-hook-form": "^6.8.4",
+    "react-paginated-list": "^1.1.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-select": "^4.0.2",
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

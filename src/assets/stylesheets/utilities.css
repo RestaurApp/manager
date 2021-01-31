@@ -15,7 +15,7 @@
 }
 
 .c-dark-gray {
-  color: var(--dark-gray)
+  color: var(--dark-gray);
 }
 
 .c-light-green {
@@ -23,11 +23,19 @@
 }
 
 .bg-light-green {
-  background-color: var(--light-green)
+  background-color: var(--light-green);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-active {
+  background-color: var(--active);
 }
 
 .c-gray {
-  color: var(--gray)
+  color: var(--gray);
 }
 
 .c-white {
