@@ -1,3 +1,11 @@
 #days-input  {
   border-radius: none !important;
 }
+
+#MenuForm  {
+  padding-bottom: 1rem;
+}
+
+#button-delete-menu {
+  cursor: pointer;
+}

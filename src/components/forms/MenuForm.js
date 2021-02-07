@@ -5,7 +5,6 @@ import AnimatedMulti from "./MultiSelect";
 import Button from "../misc/Button";
 import { getProducts } from "../../services/ProductService";
 import useFetchWithLoading from "../../hooks/useFetchWithLoading";
-import SpinnerModal from "../misc/SpinnerModal";
 import Spinner from "../misc/Spinner";
 import { WEEK_DAYS, WEEK_SPANIS_DAYS } from "../../constants/constants";
 import { createMenu } from "../../services/MenuService";
@@ -19,7 +18,7 @@ const MenuForm = ({ onPost }) => {
 
   const onSubmit = data => {
     const formattedData = {
-      ...data, 
+      ...data,  
       first: firstDish.map(e => e.value), 
       second: secondDish.map(e => e.value),
       dessert:  dessert.map(e => e.value)
@@ -27,7 +26,7 @@ const MenuForm = ({ onPost }) => {
     console.log(formattedData)
     createMenu(formattedData)
       .then(result => {
-        onPost()
+        onPost(result.data)
       })
       .catch(e => console.log(e))
   };
@@ -54,7 +53,7 @@ const MenuForm = ({ onPost }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form id="MenuForm" onSubmit={handleSubmit(onSubmit)}>
       <div className="row mb-3">
           <div className="col">
             <label htmlFor="name">Nombre del menú</label>
@@ -74,7 +73,7 @@ const MenuForm = ({ onPost }) => {
                 id="days-input"
                 className="select-input form-control"
                 ref={register} 
-                name="days"
+                name="day"
               >
                 { WEEK_DAYS.map((day, i) => <option key={i} value={day}>{WEEK_SPANIS_DAYS[i]}</option>) }
               </select>

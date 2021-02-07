@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button'
 import '../../assets/stylesheets/DishRow.css'
 
-const DefaultRow = ({ title, setShowModal, addRow, addDishAction, dishId }) => {
+const DefaultRow = ({ selected, title, setShowModal, addRow, addDishAction, dishId }) => {
   return (
     <div className="TableRow row">
     <div className="ImgTableRow col-2">
@@ -18,7 +18,12 @@ const DefaultRow = ({ title, setShowModal, addRow, addDishAction, dishId }) => {
         </div>
         :
         <div className="ActionTableRow col-3 d-flex justify-content-end ">
-          <div className="DishRowButton bg-orange mr-1" onClick={() => addDishAction(dishId)}>
+          <div className="DishRowButton bg-orange mr-1" onClick={() => {
+              if (!selected) {
+                addDishAction(dishId)
+              }
+              return
+            }}>
             <i className="icon-list-add"/>
           </div>
         </div>
@@ -47,7 +52,7 @@ const DishRow = ({ dish, onDelete, addDishAction, addRow, selected }) => {
   return (
     <div className={`DishRow ${selected ? 'row-selected' : ''}`}>
       {selected && <div className="selected-div-row">Seleccionado</div>}
-      <DefaultRow addRow={addRow} dishId={dish.id} title={dish.name} addDishAction={addDishAction} setShowModal={setShowDeleteModal} />
+      <DefaultRow addRow={addRow} selected={selected} dishId={dish.id} title={dish.name} addDishAction={addDishAction} setShowModal={setShowDeleteModal} />
       {showDeleteModal && <CancelRow callBackFn={setShowDeleteModal} dish={dish} onDelete={onDelete}/>}
     </div>
   );

@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../misc/Button";
 import { registerUser } from '../../services/AuthService'
+import AuthContext from "../../contexts/AuthContext";
 import '../../assets/stylesheets/RegisterForm.css'
 
-const RegisterForm = ({ setStep }) => {
+const RegisterFormStepOne = ({ setStep }) => {
   const { handleSubmit, register, errors } = useForm();
+  const { setAuthUser, currentUser } = useContext(AuthContext) 
 
   const onSubmit = values => {
     registerUser(values)
-      .then(user => {
-        console.log(user)
+      .then(result => {
+        localStorage.setItem('restaurappUser', JSON.stringify({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken}));
+        setAuthUser({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken})
         setStep(2)
       })
       .catch((e) => console.log(e))
   };
-  
+
   return (
     <div className="RegisterForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -104,4 +107,4 @@ const RegisterForm = ({ setStep }) => {
   );
 };
 
-export default RegisterForm
+export default RegisterFormStepOne

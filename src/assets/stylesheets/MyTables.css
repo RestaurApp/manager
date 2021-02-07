@@ -3,3 +3,24 @@
   margin-left: 300px;
   min-height: 100vh;
 }
+
+.TableCard .card-img-top {
+  background-color: #f9f9f9;
+}
+
+.TableCard img{
+  width: 100%;
+  padding: 1rem;
+}
+
+.TableCard {
+  cursor: pointer;
+}
+
+.TableCard .table-name {
+  position: absolute;
+  top: 20px;
+  color: #c5c5c5;
+  font-size: 1rem;
+  font-weight: 600;
+}

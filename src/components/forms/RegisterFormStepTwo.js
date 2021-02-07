@@ -1,10 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { createRestaurant } from "../../services/RestaurantService";
+import { createTables } from "../../services/TableService";
+import Button from './../misc/Button'
 import '../../assets/stylesheets/RegisterForm.css'
 
 const RegisterForm = () => {
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = values => console.log(values);
+
+  const onSubmit = values => {
+    createRestaurant(values)
+      .then(result => {
+        const tableBody = {
+          restaurantId: result.data.id,
+          number: result.data.tablesNumber
+        }
+       return  createTables(tableBody)
+          .then(result => console.log('TODO OK, AQUI HAY QUE REDIRIGIR'))
+      })
+      .catch(error =>  console.log(error))
+  };
 
   return (
     <div className="RegisterForm">
@@ -15,20 +30,22 @@ const RegisterForm = () => {
             <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
           </div>  
           <div className="col">
-            <label htmlFor="name">Restaurant name</label>
+            <label htmlFor="name">Nombre restaurante</label>
             <input
               placeholder="Nombre"
               className="form-control"
               name="name"
+              ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
           </div>
           <div className="col">
-            <label htmlFor="lastname">Address</label>
+            <label htmlFor="lastname">Dirección</label>
             <input
-              placeholder="lastname"
+              placeholder="C/ Ejemplo 123"
               className="form-control"
-              name="lastname"
+              name="address"
+              ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
           </div>
@@ -36,18 +53,19 @@ const RegisterForm = () => {
 
         <div className="row">
           <div className="col">
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone">Teléfono</label>
             <input
-              placeholder="phone"
+              placeholder="Teléfono"
               className="form-control"
               name="phone"
+              ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
           </div>
           <div className="col">
-            <label htmlFor="email">Email address</label>
+            <label htmlFor="email">Email</label>
             <input
-              placeholder="Enter email"
+              placeholder="Email del restaurante"
               className="form-control"
               name="email"
               ref={register({
@@ -64,21 +82,25 @@ const RegisterForm = () => {
 
         <div className="row">
           <div className="col">
-            <label htmlFor="tables">Tables</label>
+            <label htmlFor="tables">Número de mesas</label>
             <input
-              placeholder="tables restaurant"
+              min={0}
+              placeholder="0"
               className="form-control"
-              name="tables"
+              name="tablesNumber"
+              type="number"
+              ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
           </div>
 
           <div className="col">
-            <label htmlFor="food">Kind of Food</label>
+            <label htmlFor="food">Tipo de comida</label>
             <input
-              placeholder="food restaurant"
+              placeholder="Tipo de comida"
               className="form-control"
-              name="food"
+              name="foodType"
+              ref={register({ required: false })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
           </div>
@@ -86,19 +108,18 @@ const RegisterForm = () => {
 
         <div className="row">
           <div className="col">
-            <label htmlFor="logo">Logo restaurant</label>
+            <label htmlFor="logo">Logo del restaurante</label>
             <input
               type="file"
               placeholder="logo restaurant"
               className="form-control"
               name="logo-restaurante"
             />
-            <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
           </div>
         </div>
     
         <div className="Buttons-container">
-          <button className="btn"type="submit">Submit</button>
+          <Button buttonType="submit" stype="primary">Submit</Button>
         </div>
       </form>
     </div>
