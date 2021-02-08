@@ -12,8 +12,6 @@ const RegisterFormStepOne = ({ setStep }) => {
   const onSubmit = values => {
     registerUser(values)
       .then(result => {
-        localStorage.setItem('restaurappUser', JSON.stringify({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken}));
-        setAuthUser({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken})
         setStep(2)
       })
       .catch((e) => console.log(e))

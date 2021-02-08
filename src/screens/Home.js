@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import IntroHome from '../assets/img/introHome.svg'
 import Button from '../components/misc/Button';
 import '../assets/stylesheets/Home.css'
 import '../assets/stylesheets/RegisterForm.css'
+import { Redirect } from 'react-router-dom';
+import AuthContext from '../contexts/AuthContext';
 
 const Home = () => {
+  const { currentUser } = useContext(AuthContext) 
+
+  if (currentUser) {
+    return <Redirect to="/dashboard"/>
+  }
   return (
     <div className="Home">
       <img className="Homeimage" src={IntroHome} alt="intro-home" />

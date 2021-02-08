@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { createRestaurant } from "../../services/RestaurantService";
 import { createTables } from "../../services/TableService";
 import Button from './../misc/Button'
 import '../../assets/stylesheets/RegisterForm.css'
+import { Redirect } from "react-router-dom";
 
 const RegisterForm = () => {
   const { handleSubmit, register, errors } = useForm();
+  const [redirect, setRedirect] = useState(false)
 
   const onSubmit = values => {
     createRestaurant(values)
@@ -16,10 +18,14 @@ const RegisterForm = () => {
           number: result.data.tablesNumber
         }
        return  createTables(tableBody)
-          .then(result => console.log('TODO OK, AQUI HAY QUE REDIRIGIR'))
+          .then(result => setRedirect(true))
       })
       .catch(error =>  console.log(error))
   };
+
+  if (redirect) {
+    return <Redirect to="/login"/>
+  }
 
   return (
     <div className="RegisterForm">
@@ -119,7 +125,7 @@ const RegisterForm = () => {
         </div>
     
         <div className="Buttons-container">
-          <Button buttonType="submit" stype="primary">Submit</Button>
+          <Button buttonType="submit" text="Registrar" type="primary"/>
         </div>
       </form>
     </div>

@@ -1,31 +1,50 @@
 import React, { useContext, useState, useCallback } from 'react';
 import SideBar from '../components/misc/SideBar';
 import WhiteBox from '../components/misc/WhiteBox';
-import AuthContext from '../contexts/AuthContext';
-import TableImage from '../assets/img/table.svg'
-import { getTables, addTable } from '../services/TableService';
+import TableFreeImage from '../assets/img/table-free.svg'
+import TableOcuppiedImage from '../assets/img/table-occupied.svg'
+import { getTables, addTable, updateTable } from '../services/TableService';
 import useFetchWithLoading from '../hooks/useFetchWithLoading';
-import  Button from './../components/misc/Button';
+import Button from './../components/misc/Button';
 import '../assets/stylesheets/MyTables.css'
+import SpinnerModal from '../components/misc/SpinnerModal';
+import Modal from './../components/misc/Modal';
+import TableForm from '../components/forms/TableForm';
+
 
 const MyTables = () => {
   const [tables, setTables] = useState([])
+  const [showForm, setShowForm] = useState(false)
+  const [currentTable, setCurrentTable] = useState('')
 
   const fetchTables = useCallback(async () => {
     const [tablesResult] = await Promise.all([
       getTables()
     ])
-      .then(values => values)
-      .catch(e =>  console.log(e))
-
-    setTables(tablesResult.data)
+      .then(values => {
+        setTables(values[0].data)
+        return values
+      })
+      .catch(e => console.log(e))
 
     return { tablesResult }
   }, [])
 
+  const updateQuickStatus = (id, state) => {
+    console.log(id, state)
+    const bodyState = {
+      state: state === "Libre" ? 'Reservada' : "Libre"
+    }
+    updateTable(bodyState, id)
+      .then(result => {
+        console.log(result)
+        setTables(tables.map(table => table.id === result.data.id ? { ...table, state: result.data.state } : table))
+      })
+  }
+
   const createTable = () => {
     console.log(tables.length)
-    addTable({number: tables.length})
+    addTable({ number: tables.length + 3 })
       .then(result => {
         setTables([...tables, result.data])
       })
@@ -33,6 +52,10 @@ const MyTables = () => {
   }
 
   const [loading, data] = useFetchWithLoading(fetchTables)
+
+  if (loading) {
+    return <SpinnerModal />
+  }
 
   return (
     <div className="MyTables">
@@ -44,33 +67,73 @@ const MyTables = () => {
             It's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
           </p>
           <Button buttonType="submit" type="primary" text="Crear mesa" action={createTable}></Button>
-          <div className="row mt-3">
-            {tables.map((table, i) => {
-              console.log('mesas', tables)
+          <div className="row mt-5">
+            {data && tables.map((table, i) => {
               return (
-
-                <div className="col-md-6 col-lg-4 mb-3" key={i}>
-                <div className="card TableCard">
-                  <img className="card-img-top" src={TableImage} alt="Card caption" />
-                  <div className="card-body">
-                    <h5>Mesa</h5>
-                    <div>
-                      <p className="m-0">Estado: </p>
-                      <p className="m-0">Comensales: </p>
+                <div className="col-md-6 col-lg-4 mb-4" key={i}>
+                  <div className="card TableCard">
+                    <img
+                      className="card-img-top"
+                      src={table.state === 'Libre' ? TableFreeImage : TableOcuppiedImage}
+                      alt="Card caption"
+                    />
+                    <div className="card-body">
+                      <h5>{table.name}</h5>
+                      <div>
+                        <p className="table-card-quote m-0">
+                          Estado:
+                        <span
+                            className={`state-message-${table.state === 'Libre' ? 'free' : 'occupied'}`}
+                          >
+                            {table.state}
+                          </span>
+                        </p>
+                        <p className="table-card-quote m-0">
+                          Comensales:
+                        <span className="diners-message">{table.diners}</span>
+                        </p>
+                      </div>
                     </div>
+                    <div className="px-2 mb-3 d-flex align-items-center justify-content-around">
+                      <button onClick={() => {
+                          setShowForm(true)
+                          setCurrentTable(table)
+                        }}>
+                        Editar
+                      </button>
+                      <button 
+                        onClick={() => updateQuickStatus(table.id, table.state)}>
+                          {table.state === 'Libre' ? 'Reservar' : 'Liberar'}
+                      </button>
+                    </div>
+
                   </div>
                 </div>
-              </div>
-                // <div className="TableCard col-md-6 col-lg-4" key={i}>
-                //   <img alt="table" className="tableImg" src={TableImage}></img>
-                //   <p className="table-name">Mesa {table.tableNumber}</p>
-                // </div>
               )
             })}
           </div>
-       
+          {showForm &&
+            <Modal
+              title="Editar mesa"
+              description="It's simply dummy text of the printing and typesetting industry."
+              onCloseModal={() => setShowForm(false)}
+            >
+              <TableForm 
+                table={currentTable}
+                callBack={(newTable) => {
+                  setShowForm(false)
+                  setTables([newTable, ...tables.filter(table => table.id !== currentTable.id)])
+                }}
+                onDelete={(deletedTable) => {
+                  console.log('Deletedtable',deletedTable)
+                  setShowForm(false)
+                  setTables(tables.filter(table => table.id !== currentTable.id))
+                }}
+              />
+            </Modal>
+          }
         </WhiteBox>
-        </div>
+      </div>
     </div>
   );
 };

@@ -10,11 +10,30 @@
 
 .TableCard img{
   width: 100%;
-  padding: 1rem;
+  padding: 1.75rem;
 }
 
 .TableCard {
   cursor: pointer;
+}
+
+.TableCard .table-card-quote .state-message-free, 
+.TableCard .table-card-quote .state-message-occupied, 
+.TableCard .table-card-quote .diners-message {
+  font-weight: 700;
+  margin-left: 0.25rem;
+}
+
+.TableCard .table-card-quote .state-message-free {
+  color: var(--active);
+}
+
+.TableCard .table-card-quote .state-message-occupied {
+  color: var(--red-color);
+}
+
+.TableCard .table-card-quote {
+  font-size: 0.9rem;
 }
 
 .TableCard .table-name {
