@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 const useClickOutside = (wrapperRef, fn) => {
+  console.log(wrapperRef)
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, false);
     return () => {

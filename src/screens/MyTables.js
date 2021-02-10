@@ -42,9 +42,18 @@ const MyTables = () => {
       })
   }
 
+  const nextTableNum = () => {
+    return tables.length 
+      ? tables.reduce((acc, table) => {
+        return table.tableNumber > acc ? acc = table.tableNumber : acc
+    }, 0) + 1
+      : 1
+  }
+
+
   const createTable = () => {
     console.log(tables.length)
-    addTable({ number: tables.length + 3 })
+    addTable({ number: nextTableNum()  })
       .then(result => {
         setTables([...tables, result.data])
       })

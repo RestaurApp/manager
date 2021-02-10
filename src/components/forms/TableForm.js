@@ -77,7 +77,7 @@ const TableForm = ({ callBack, table, onDelete }) => {
           </div> 
         <div className="d-flex align-items-center mt-3 mb-0">
           <Button buttonType="submit" text="Guardar" type="primary" />
-          <div id="button-delete-menu" className="Button Button-primary outline ml-2" onClick={() => onDeleteTable()}>Borrar menú</div>
+          <div id="button-delete-menu" className="Button Button-primary outline ml-2" onClick={() => onDeleteTable()}>Eliminar mesa</div>
         </div>
 
       </form>

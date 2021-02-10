@@ -42,18 +42,24 @@ const CancelRow = ({ dish, onDelete, callBackFn }) => {
         type="primary"
         action={() => onDelete(dish.id, callBackFn)}
       />
+      <Button
+        small
+        linear
+        text="Eliminar" 
+        type="primary"
+        action={() => onDelete(dish.id, callBackFn)}
+      />
     </div>
   )
 }
 
-const DishRow = ({ dish, onDelete, addDishAction, addRow, selected }) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  console.log(selected)
+const DishRow = ({ dish, onDelete, addDishAction, addRow, selected, defaultDeleted=false }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(defaultDeleted)
   return (
     <div className={`DishRow ${selected ? 'row-selected' : ''}`}>
       {selected && <div className="selected-div-row">Seleccionado</div>}
       <DefaultRow addRow={addRow} selected={selected} dishId={dish.id} title={dish.name} addDishAction={addDishAction} setShowModal={setShowDeleteModal} />
-      {showDeleteModal && <CancelRow callBackFn={setShowDeleteModal} dish={dish} onDelete={onDelete}/>}
+      {showDeleteModal && !selected && <CancelRow callBackFn={setShowDeleteModal} dish={dish} onDelete={onDelete}/>}
     </div>
   );
 };

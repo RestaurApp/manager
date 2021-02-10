@@ -139,6 +139,7 @@ const MyCategories = () => {
                       ? allDishes.map((dish, i) => {
                         return (
                           <DishRow
+                            defaultDeleted={false}
                             selected={dish.category === currentCategory.id}
                             addRow 
                             addDishAction={addDishToCategory} 
@@ -148,7 +149,7 @@ const MyCategories = () => {
                           />
                         )
                       })
-                      : <p className="m-0 text-center p-2">"Está categoría no tiene platos asignados"</p>
+                      : <p className="m-0 text-center p-2">"Aún no tienes platos creados"</p>
                     }
                   </WhiteBox>
                   <button
