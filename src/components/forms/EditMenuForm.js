@@ -5,7 +5,7 @@ import Button from "../misc/Button";
 import { getProducts } from "../../services/ProductService";
 import useFetchWithLoading from "../../hooks/useFetchWithLoading";
 import Spinner from "../misc/Spinner";
-import { WEEK_DAYS, WEEK_SPANIS_DAYS } from "../../constants/constants";
+import { WEEK_DAYS, WEEK_SPANISH_DAYS } from "../../constants/constants";
 import { updateMenu, deleteMenu } from "../../services/MenuService";
 import '../../assets/stylesheets/MenuForm.css'
 import '../../assets/stylesheets/Button.css'
@@ -105,7 +105,7 @@ const EditMenuForm = ({ onPost, onDelete, menu }) => {
                   ref={register} 
                   name="day"
                 >
-                  { WEEK_DAYS.map((day, i) => <option key={i} value={day}>{WEEK_SPANIS_DAYS[i]}</option>) }
+                  { WEEK_DAYS.map((day, i) => <option key={i} value={day}>{WEEK_SPANISH_DAYS[i]}</option>) }
                 </select>
               </div>
               {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
