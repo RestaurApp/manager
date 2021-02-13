@@ -33,7 +33,8 @@ const MyTables = () => {
   const updateQuickStatus = (id, state) => {
     console.log(id, state)
     const bodyState = {
-      state: state === "Libre" ? 'Reservada' : "Libre"
+      state: state === "Libre" ? 'Reservada' : "Libre",
+      diners: 0
     }
     updateTable(bodyState, id)
       .then(result => {
@@ -104,13 +105,14 @@ const MyTables = () => {
                       </div>
                     </div>
                     <div className="px-2 mb-3 d-flex align-items-center justify-content-around">
-                      <button onClick={() => {
+                      <button className="Button Button-primary smallBtn" onClick={() => {
                           setShowForm(true)
                           setCurrentTable(table)
                         }}>
                         Editar
                       </button>
-                      <button 
+                      <button  
+                        className="Button Button-primary smallBtn"
                         onClick={() => updateQuickStatus(table.id, table.state)}>
                           {table.state === 'Libre' ? 'Reservar' : 'Liberar'}
                       </button>

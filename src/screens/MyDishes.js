@@ -19,12 +19,14 @@ const MyDishes = () => {
   const [showForm, setShowForm] = useState(false)
   const [showEditForm, setShowEditForm] = useState(false)
   const [currentDish, setCurrentDish] = useState('')
+  const [showDeleteDishModal, setShowDeleteDishModal] = useState(false)
   
   const deleteDish = (id) => {
     deleteProduct(id)
       .then(product => {
         const filteredDishes = dishes.filter(e => e.id !== id)
         setDishes(filteredDishes)
+        setShowDeleteDishModal(false)
       })
       .catch(e => console.log(e))
   }
@@ -88,6 +90,20 @@ const MyDishes = () => {
             />
           </Modal>
         }
+        {showDeleteDishModal && 
+           <Modal
+              title="Modal"
+              description={`¿Estas seguro de eliminar el plato con el nombre: ${currentDish.name}?`}
+              onCloseModal={() => setShowDeleteDishModal(false)}
+            >
+              <div className="d-flex align-items-center justify-content-center">
+                <Button type="primary" action={() => deleteDish(currentDish.id)} text="Eliminar"/>
+                <Button type="primary" outline action={() => setShowDeleteDishModal(false)} text="Cancelar"/>
+              </div>
+             
+         </Modal>
+
+        }
 
         <WhiteBox extraClassNames="mt-4">
           <div className="mt-2 mb-4">
@@ -133,7 +149,10 @@ const MyDishes = () => {
                             >
                               <i className="icon-pencil" />
                             </div>
-                            <div className="DishRowButton bg-cancel" onClick={() => deleteDish(dish.id)}>
+                            <div className="DishRowButton bg-cancel" onClick={() => {
+                              setShowDeleteDishModal(dish.id)
+                              setCurrentDish(dish)
+                            }}>
                               <i className="icon-cancel" />
                             </div>
                           </td>

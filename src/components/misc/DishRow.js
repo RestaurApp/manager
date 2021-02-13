@@ -42,13 +42,6 @@ const CancelRow = ({ dish, onDelete, callBackFn }) => {
         type="primary"
         action={() => onDelete(dish.id, callBackFn)}
       />
-      <Button
-        small
-        linear
-        text="Eliminar" 
-        type="primary"
-        action={() => onDelete(dish.id, callBackFn)}
-      />
     </div>
   )
 }

@@ -12,6 +12,7 @@ import '../../assets/stylesheets/Button.css'
 
 const EditMenuForm = ({ onPost, onDelete, menu }) => {
   const [dishes, setDishes] = useState([])
+  console.log(menu)
   const formatMultipleChoice = (arr) => {
     return arr.map(e => { return { value: e.id, label: e.name }})
   }
