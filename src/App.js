@@ -10,21 +10,21 @@ import MyTables from './screens/MyTables';
 import MyDishes from './screens/MyDishes';
 import './App.css';
 import './assets/fonts/css/font.css'
-import ProtectedRoute from './components/misc/ProtectedRoute';
+import  AuthenticatedRoute, {NotAuthenticatedRoute } from './guards/AuthenticatedRoute';
 
 function App() {
 
   return (
     <div className="App">
       <Switch>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/register' component={Register}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/dashboard' component={DashBoard}/>
-        <Route exact path='/mymenus' component={MyMenus}/>
-        <Route exact path='/mycategories' component={MyCategories}/>
-        <Route exact path='/mydishes' component={MyDishes}/>
-        <Route exact path='/mytables' component={MyTables}/>
+        <AuthenticatedRoute exact path='/' component={Home}/>
+        <NotAuthenticatedRoute exact path='/register' component={Register}/>
+        <NotAuthenticatedRoute exact path='/login' component={Login}/>
+        <AuthenticatedRoute exact path='/dashboard' component={DashBoard}/>
+        <AuthenticatedRoute exact path='/mymenus' component={MyMenus}/>
+        <AuthenticatedRoute exact path='/mycategories' component={MyCategories}/>
+        <AuthenticatedRoute exact path='/mydishes' component={MyDishes}/>
+        <AuthenticatedRoute exact path='/mytables' component={MyTables}/>
         
         <Redirect to='/dashboard'/> 
       </Switch>

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthContextProvider } from './contexts/AuthContext';
+import firebaseApp from './services/Firebase'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -15,5 +16,9 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 );
+
+const disconnectOnAuthStateChangedObserver = firebaseApp
+.auth()
+.onAuthStateChanged(() => disconnectOnAuthStateChangedObserver())
 
 serviceWorker.unregister();
