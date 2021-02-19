@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { StandaloneSearchBox } from '@react-google-maps/api';
 
-const AddressInput = ({ setPlaceDetail }) => {
+const AddressInput = ({ setupPlaceDetail, profileEdit }) => {
   const [query, setQuery] = useState('');
   const autoCompleteRef = useRef(null);
   const autoComplete = useRef(null);
@@ -11,19 +11,16 @@ const AddressInput = ({ setPlaceDetail }) => {
       const addressObject = autoComplete.current.getPlace();
       const query = addressObject?.formatted_address;
       updateQuery(query);
-      setPlaceDetail(addressObject);
+      setupPlaceDetail(addressObject);
     },
-    [setPlaceDetail]
+    [setupPlaceDetail]
   );
 
   const onLoad = useCallback(() => {
-    autoComplete.current = new window.google.maps.places.AutoComplete(
-      autoCompleteRef.current,
-      {
-        types: ['geocode'],
-        componentRestrictions: { country: 'es' },
-      }
-    );
+    autoComplete.current = new window.google.maps.places.Autocomplete(autoCompleteRef.current, {
+      types: ['geocode'],
+      componentRestrictions: { country: 'es' },
+    });
     autoComplete.current.setFields([
       'address_components',
       'formatted_address',
@@ -31,19 +28,18 @@ const AddressInput = ({ setPlaceDetail }) => {
       'geometry',
       'place_id',
     ]);
-    autoComplete.current.addListener('place_changed', () =>
-      handlePlaceSelect(setQuery)
-    );
+    autoComplete.current.addListener('place_changed', () => handlePlaceSelect(setQuery));
   }, [handlePlaceSelect]);
 
   return (
     <StandaloneSearchBox onLoad={onLoad} onPlacesChanged={handlePlaceSelect}>
       <input
-        placeholder="C/ Ejemplo 123"
-        className="form-control"
-        name="address"
+        className="form-control "
         ref={autoCompleteRef}
+        name="address"
+        id={profileEdit ? 'inputAddressEdit' : ''}
         onChange={(event) => setQuery(event.target.value)}
+        placeholder='Introduce dirección'
         value={query}
       />
     </StandaloneSearchBox>
@@ -51,3 +47,4 @@ const AddressInput = ({ setPlaceDetail }) => {
 };
 
 export default AddressInput;
+

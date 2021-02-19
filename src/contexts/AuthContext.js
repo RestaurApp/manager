@@ -10,8 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const setAuthUser = useCallback((user) => {
-    if (currentUser === null)
-      localStorage.setItem('restaurappUser', JSON.stringify(user));
+    localStorage.setItem('restaurappUser', JSON.stringify(user));
     setUser(user);
   }, []);
 

@@ -1,31 +1,57 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { createRestaurant } from "../../services/RestaurantService";
-import { createTables } from "../../services/TableService";
-import AddressInput from './../misc/AddressInput'
-import Button from './../misc/Button'
-import '../../assets/stylesheets/RegisterForm.css'
-import { Redirect } from "react-router-dom";
+import React, { useState, useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom';
+import { createRestaurant } from '../../services/RestaurantService';
+import { createTables } from '../../services/TableService';
+import AddressInput from './../misc/AddressInput';
+import Button from './../misc/Button';
+import AuthContext from '../../contexts/AuthContext';
+import '../../assets/stylesheets/RegisterForm.css';
 
 const RegisterForm = () => {
+  const { setAuthUser, currentUser } = useContext(AuthContext);
   const { handleSubmit, register, errors } = useForm();
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState();
+  const [placeDetail, setPlaceDetail] = useState();
 
-  const onSubmit = values => {
-    createRestaurant(values)
-      .then(result => {
-        const tableBody = {
-          restaurantId: result.data.id,
-          number: result.data.tablesNumber
-        }
-       return  createTables(tableBody)
-          .then(result => setRedirect(true))
-      })
-      .catch(error =>  console.log(error))
+  const setupPlaceDetail = (data) => {
+    const lat = !data?.geometry?.location?.lat ? null : data?.geometry?.location.lat();
+    const lng = !data?.geometry?.location?.lng ? null : data?.geometry?.location.lng();
+
+    const address = {
+      formattedAddress: data.formatted_address,
+      latitude: lat,
+      longitude: lng,
+      placeId: data.place_Id,
+      vicinity: data.vicinity,
+    };
+
+    setPlaceDetail({
+      address,
+      location: { type: 'Point', coordinates: [lng, lat] },
+    });
   };
 
+  const onSubmit = (values) => {
+    createRestaurant({ ...values, ...placeDetail })
+      .then((result) => {
+        const tableBody = {
+          restaurantId: result.data.id,
+          number: result.data.tablesNumber,
+        };
+        setAuthUser({
+          ...currentUser,
+          newUser: {
+            ...currentUser.newUser,
+            restaurants: [result.data],
+          },
+        });
+        return createTables(tableBody).then(() => setRedirect(true));
+      })
+      .catch((error) => console.log(error));
+  };
   if (redirect) {
-    return <Redirect to="/login"/>
+    return <Redirect to="/login" />;
   }
 
   return (
@@ -33,9 +59,11 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="col-12 mb-4">
-            <h2 className="StepOneTitle">Crea tu restaurante con <span>MyMenus</span></h2>
+            <h2 className="StepOneTitle">
+              Crea tu restaurante con <span>MyMenus</span>
+            </h2>
             <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
-          </div>  
+          </div>
           <div className="col">
             <label htmlFor="name">Nombre restaurante</label>
             <input
@@ -44,18 +72,12 @@ const RegisterForm = () => {
               name="name"
               ref={register({ required: true })}
             />
-            <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
+            <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
           <div className="col">
             <label htmlFor="lastname">Dirección</label>
-            {/* <input
-              placeholder="C/ Ejemplo 123"
-              className="form-control"
-              name="address"
-              ref={register({ required: true })}
-            /> */}
-            <AddressInput />
-            <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
+            <AddressInput setupPlaceDetail={setupPlaceDetail} />
+            <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
         </div>
 
@@ -68,7 +90,7 @@ const RegisterForm = () => {
               name="phone"
               ref={register({ required: true })}
             />
-            <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
+            <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
           <div className="col">
             <label htmlFor="email">Email</label>
@@ -77,14 +99,14 @@ const RegisterForm = () => {
               className="form-control"
               name="email"
               ref={register({
-                required: "Required",
+                required: 'Required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address"
-                }
+                  message: 'invalid email address',
+                },
               })}
             />
-            <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
+            <p className="text-danger text-left">{errors.email && errors.email.message}</p>
           </div>
         </div>
 
@@ -99,7 +121,7 @@ const RegisterForm = () => {
               type="number"
               ref={register({ required: true })}
             />
-            <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
+            <p className="text-danger text-left">{errors.email && errors.email.message}</p>
           </div>
 
           <div className="col">
@@ -110,7 +132,7 @@ const RegisterForm = () => {
               name="foodType"
               ref={register({ required: false })}
             />
-            <p className="text-danger text-left">{errors.email && errors.email.message}</p> 
+            <p className="text-danger text-left">{errors.email && errors.email.message}</p>
           </div>
         </div>
 
@@ -125,13 +147,13 @@ const RegisterForm = () => {
             />
           </div>
         </div>
-    
+
         <div className="Buttons-container">
-          <Button buttonType="submit" text="Registrar" type="primary"/>
+          <Button buttonType="submit" text="Registrar" type="primary" />
         </div>
       </form>
     </div>
   );
 };
 
-export default RegisterForm
+export default RegisterForm;

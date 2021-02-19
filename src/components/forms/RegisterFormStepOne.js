@@ -3,16 +3,16 @@ import { useForm } from "react-hook-form";
 import Button from "../misc/Button";
 import { registerUser } from '../../services/AuthService'
 import AuthContext from "../../contexts/AuthContext";
-import AddressInput from './../misc/AddressInput'
 import '../../assets/stylesheets/RegisterForm.css'
 
 const RegisterFormStepOne = ({ setStep }) => {
   const { handleSubmit, register, errors } = useForm();
-  const { setAuthUser, currentUser } = useContext(AuthContext) 
+  const { setAuthUser } = useContext(AuthContext) 
 
   const onSubmit = values => {
     registerUser(values)
       .then(result => {
+        setAuthUser(result.data)
         setStep(2)
       })
       .catch((e) => console.log(e))
@@ -54,13 +54,12 @@ const RegisterFormStepOne = ({ setStep }) => {
         <div className="row mb-3">
           <div className="col">
             <label htmlFor="phone">Phone</label>
-            {/* <input
+            <input
               placeholder="phone"
               className="form-control"
               name="phone"
               ref={register({ required: true })}
-            /> */}
-            <AddressInput />
+            />
             {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>}
           </div>
           <div className="col">

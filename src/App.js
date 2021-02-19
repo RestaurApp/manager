@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Switch>
         <AuthenticatedRoute exact path='/' component={Home}/>
-        <NotAuthenticatedRoute exact path='/register' component={Register}/>
+        <Route exact path='/register' component={Register}/>
         <NotAuthenticatedRoute exact path='/login' component={Login}/>
         <AuthenticatedRoute exact path='/dashboard' component={DashBoard}/>
         <AuthenticatedRoute exact path='/mymenus' component={MyMenus}/>
