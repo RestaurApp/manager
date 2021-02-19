@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { createRestaurant } from "../../services/RestaurantService";
 import { createTables } from "../../services/TableService";
+import AddressInput from './../misc/AddressInput'
 import Button from './../misc/Button'
 import '../../assets/stylesheets/RegisterForm.css'
 import { Redirect } from "react-router-dom";
@@ -47,12 +48,13 @@ const RegisterForm = () => {
           </div>
           <div className="col">
             <label htmlFor="lastname">Dirección</label>
-            <input
+            {/* <input
               placeholder="C/ Ejemplo 123"
               className="form-control"
               name="address"
               ref={register({ required: true })}
-            />
+            /> */}
+            <AddressInput />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p> 
           </div>
         </div>
