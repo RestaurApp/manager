@@ -99,10 +99,11 @@ const MyCategories = () => {
           <hr className="mt-3 mb-4"></hr>
           <div className="row">
             {data && categories.map((category, i) => {
+              const img = category.picture ? category.picture : DefaultImg
               return (
                 <div className="col-md-6 col-lg-4 mb-3" key={i}>
                   <div className="card">
-                    <img className="card-img-top" src={DefaultImg} alt="Card caption" />
+                    <img className="card-img-top" src={category.picture} alt="Card caption" />
                     <div className="card-body">
                       <h5>{category.name}</h5>
                       <p className="text-small">{category.description}</p>

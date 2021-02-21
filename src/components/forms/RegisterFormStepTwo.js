@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
-import { createRestaurant } from '../../services/RestaurantService';
+import { createRestaurant, updateRestaurant } from '../../services/RestaurantService';
 import { createTables } from '../../services/TableService';
 import AddressInput from './../misc/AddressInput';
 import Button from './../misc/Button';
@@ -13,6 +13,7 @@ const RegisterForm = () => {
   const { handleSubmit, register, errors } = useForm();
   const [redirect, setRedirect] = useState();
   const [placeDetail, setPlaceDetail] = useState();
+  const [value, setValue] = useState();
 
   const setupPlaceDetail = (data) => {
     const lat = !data?.geometry?.location?.lat ? null : data?.geometry?.location.lat();
@@ -32,23 +33,42 @@ const RegisterForm = () => {
     });
   };
 
-  const onSubmit = (values) => {
-    createRestaurant({ ...values, ...placeDetail })
-      .then((result) => {
-        const tableBody = {
-          restaurantId: result.data.id,
-          number: result.data.tablesNumber,
-        };
-        setAuthUser({
-          ...currentUser,
-          newUser: {
-            ...currentUser.newUser,
-            restaurants: [result.data],
-          },
-        });
-        return createTables(tableBody).then(() => setRedirect(true));
-      })
-      .catch((error) => console.log(error));
+  const fileUpload = (event) => event.target.files[0] && setValue(event.target.files[0]);
+
+  const onSubmit = async (values) => {
+    try {
+      const form = { ...values, ...placeDetail };
+     
+      const formData = new FormData();
+      formData.append('picture', value);
+
+      const result = await createRestaurant(form);
+
+      const tableBody = {
+        restaurantId: result.data.id,
+        number: result.data.tablesNumber,
+      };
+      setAuthUser({
+        ...currentUser,
+        newUser: {
+          ...currentUser.newUser,
+          restaurants: [result.data],
+        },
+      });
+      await createTables(tableBody);
+      const response = value && await updateRestaurant(result.data.id, formData);
+      
+      setAuthUser({
+        ...currentUser,
+        newUser: {
+          ...currentUser.newUser,
+          restaurants: [response.data],
+        },
+      });
+      setRedirect(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
   if (redirect) {
     return <Redirect to="/login" />;
@@ -56,7 +76,7 @@ const RegisterForm = () => {
 
   return (
     <div className="RegisterForm">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
         <div className="row">
           <div className="col-12 mb-4">
             <h2 className="StepOneTitle">
@@ -143,7 +163,8 @@ const RegisterForm = () => {
               type="file"
               placeholder="logo restaurant"
               className="form-control"
-              name="logo-restaurante"
+              name="file"
+              onChange={fileUpload}
             />
           </div>
         </div>

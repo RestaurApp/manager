@@ -21,27 +21,32 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
 
   const [allergens, setAllergens] = useState(defaultAllergens)
 
-  const onSubmit = values => {
-    const dataAllergens = allergens.reduce((acc, allergen) => {
-      return [...acc, allergen.value]
-    }, [])
+  const onSubmit = async (values) => {
+    try {
+      const dataAllergens = allergens.reduce((acc, allergen) => {
+        return [...acc, allergen.value];
+      }, []);
 
-    const data = { 
-      ...values, 
-      allergens: dataAllergens,
-      type: 'esto hay que borrarlo' 
+      const data = {
+        ...values,
+        allergens: dataAllergens,
+        type: 'esto hay que borrarlo',
+      };
+
+      const result = await updateProduct(data, dish.id);
+      if (values.file[0]) {
+        const uploads = new FormData();
+        uploads.append('picture', values.file[0]);
+        await updateProduct(uploads, dish.id);
+      }
+      
+      onSubmitCb(result.data);
+    } catch (error) {
+      console.log(error);
     }
-
-    console.log(data)
-
-    updateProduct(data, dish.id)
-      .then(result => {
-        onSubmitCb(result.data)
-      })
-      .catch(e => console.log(e))
-
   };
-  console.log(dish)
+
+
   return (
     <div className="RegisterDishesForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -83,6 +88,22 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
             />
             {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
             <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
+          </div>
+          <div className="col-12 mt-3">
+            <label htmlFor="price">Imagen del Plato</label>
+            <input
+              type="file"
+              placeholder="Imagen del plato"
+              className="form-control"
+              name="file"
+              ref={register({ required: false })}
+            />
+            {errors.name && (
+              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            )}
+            <p className="ErrorMessage text-danger mb-0 text-left">
+              {errors.email && errors.email.message}
+            </p>
           </div>
           <div className="col-12 mt-3">
             <div className="d-flex flex-column">

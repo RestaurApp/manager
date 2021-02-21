@@ -1,34 +1,39 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import Button from "../misc/Button";
-import AnimatedMulti from "./MultiSelect";
-import { ALLERGENS } from "../../constants/constants";
-import { postProduct } from "../../services/ProductService";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '../misc/Button';
+import AnimatedMulti from './MultiSelect';
+import { ALLERGENS } from '../../constants/constants';
+import { postProduct, updateProduct } from '../../services/ProductService';
 
 const RegisterDishesForm = ({ onSubmitCb }) => {
   const { handleSubmit, register, errors } = useForm();
-  const [allergens, setAllergens] = useState([])
+  const [allergens, setAllergens] = useState([]);
 
-  const onSubmit = values => {
-    const dataAllergens = allergens.reduce((acc, allergen) => {
-      return [...acc, allergen.value]
-    }, [])
+  const onSubmit = async (values) => {
+    try {
+      const dataAllergens = allergens.reduce((acc, allergen) => {
+        return [...acc, allergen.value];
+      }, []);
 
-    const data = { 
-      ...values, 
-      allergens: dataAllergens,
-      type: 'esto hay que borrarlo' 
+      const data = {
+        ...values,
+        allergens: dataAllergens,
+        type: 'esto hay que borrarlo',
+      };
+
+      const result = await postProduct(data);
+      if (values.file[0]) {
+        const uploads = new FormData();
+        uploads.append('picture', values.file[0]);
+        await updateProduct(uploads, result.data.id);
+      }
+      
+      onSubmitCb(result.data);
+    } catch (error) {
+      console.log(error);
     }
-
-    postProduct(data)
-      .then(result => {
-        console.log(result)
-        onSubmitCb(result.data)
-      })
-      .catch(e => console.log(e))
-
   };
-  
+
   return (
     <div className="RegisterDishesForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -42,7 +47,9 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               name="name"
               ref={register({ required: true })}
             />
-           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+            {errors.name && (
+              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            )}
           </div>
         </div>
 
@@ -57,7 +64,9 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               name="price"
               ref={register({ required: false })}
             />
-            {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>}
+            {errors.phone && (
+              <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>
+            )}
           </div>
           <div className="col-12 mt-3">
             <label htmlFor="price">Description del Plato</label>
@@ -68,27 +77,43 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               name="description"
               ref={register({ required: true })}
             />
-            {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
-            <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
+            {errors.name && (
+              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            )}
+            <p className="ErrorMessage text-danger mb-0 text-left">
+              {errors.email && errors.email.message}
+            </p>
+          </div>
+          <div className="col-12 mt-3">
+            <label htmlFor="price">Imagen del Plato</label>
+            <input
+              type="file"
+              placeholder="Imagen del plato"
+              className="form-control"
+              name="file"
+              ref={register({ required: false })}
+            />
+            {errors.name && (
+              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            )}
+            <p className="ErrorMessage text-danger mb-0 text-left">
+              {errors.email && errors.email.message}
+            </p>
           </div>
           <div className="col-12 mt-3">
             <div className="d-flex flex-column">
               <label htmlFor="lastName">Alergenos del plato</label>
-              <AnimatedMulti
-                options={ALLERGENS}
-                name="Second"
-                onChangeFn={setAllergens}
-              />
+              <AnimatedMulti options={ALLERGENS} name="Second" onChangeFn={setAllergens} />
             </div>
           </div>
         </div>
-      
+
         <div className="Buttons-container">
-          <Button type="primary" buttonType="submit" text="Submit"/>
+          <Button type="primary" buttonType="submit" text="Submit" />
         </div>
       </form>
     </div>
   );
 };
 
-export default RegisterDishesForm
+export default RegisterDishesForm;
