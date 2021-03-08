@@ -1,5 +1,5 @@
 import React from 'react';
-import UserImg from '../../assets/img/img_cook_hat.svg'
+// import UserImg from '../../assets/img/img_cook_hat.svg'
 import '../../assets/stylesheets/SideBar.css'
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext'
@@ -7,13 +7,13 @@ import { useAuthContext } from '../../contexts/AuthContext'
 const SideBar = ({ activeTab }) => {
 
   const { currentUser } = useAuthContext()
-console.log(currentUser);
+
   return (
     <nav id="sidebar">
       <div className="img bg-wrap text-center py-4" >
         <div className="user-logo">
-          <div className="img" style={{ backgroundImage: `url(${currentUser.newUser.restaurants[0].picture}`}}></div>
-          <h3>{currentUser.newUser.restaurants[0].name}</h3>
+          <div className="img" style={{ backgroundImage: `url(${currentUser.restaurants[0].picture}`}}></div>
+          <h3>{currentUser?.restaurants[0].name}</h3>
         </div>
       </div>
       <ul className="list-unstyled components mb-5">

@@ -27,19 +27,20 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
         uploads.append('picture', values.file[0]);
         await updateProduct(uploads, result.data.id);
       }
-      
+
       onSubmitCb(result.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+
   return (
     <div className="RegisterDishesForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
         <div className="row mb-3">
           <div className="col">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Nombre del plato</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -55,7 +56,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
 
         <div className="row mb-3">
           <div className="col">
-            <label htmlFor="price">Precio del Plato</label>
+            <label htmlFor="price">Precio del plato</label>
             <input
               step=".01"
               type="number"
@@ -69,10 +70,10 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
             )}
           </div>
           <div className="col-12 mt-3">
-            <label htmlFor="price">Description del Plato</label>
+            <label htmlFor="price">Descripción del plato</label>
             <input
               type="text"
-              placeholder="Nombre"
+              placeholder="Descripción"
               className="form-control"
               name="description"
               ref={register({ required: true })}
@@ -85,7 +86,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
             </p>
           </div>
           <div className="col-12 mt-3">
-            <label htmlFor="price">Imagen del Plato</label>
+            <label htmlFor="price">Imagen del plato</label>
             <input
               type="file"
               placeholder="Imagen del plato"
@@ -100,6 +101,10 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               {errors.email && errors.email.message}
             </p>
           </div>
+
+          
+
+
           <div className="col-12 mt-3">
             <div className="d-flex flex-column">
               <label htmlFor="lastName">Alergenos del plato</label>
@@ -109,7 +114,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
         </div>
 
         <div className="Buttons-container">
-          <Button type="primary" buttonType="submit" text="Submit" />
+          <Button type="primary" buttonType="submit" text="Siguiente paso" />
         </div>
       </form>
     </div>
