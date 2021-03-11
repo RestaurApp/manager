@@ -44,7 +44,7 @@ const TableForm = ({ callBack, table, onDelete }) => {
               name="name"
               ref={register({ required: true })}
             />
-             {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+             {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p> }
           </div> 
           <div className="col mt-3">
             <label htmlFor="name">Estado de la mesa</label>
@@ -73,7 +73,7 @@ const TableForm = ({ callBack, table, onDelete }) => {
               name="diners"
               ref={register({ required: true })}
             />
-             {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+             {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Añada el número de comensales</p> }
           </div> 
         <div className="d-flex align-items-center mt-3 mb-0">
           <Button buttonType="submit" text="Guardar" type="primary" />

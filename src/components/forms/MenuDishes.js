@@ -34,7 +34,6 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
     }
   };
 
-
   return (
     <div className="RegisterDishesForm">
       <form onSubmit={handleSubmit(onSubmit)} className="w-100">
@@ -49,7 +48,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               ref={register({ required: true })}
             />
             {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+              <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p>
             )}
           </div>
         </div>
@@ -63,10 +62,10 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               placeholder="Precio en €"
               className="form-control"
               name="price"
-              ref={register({ required: false })}
+              ref={register({ required: true })}
             />
-            {errors.phone && (
-              <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>
+            {errors.price && (
+              <p className="ErrorMessage text-danger mb-0 text-left">El precio es requerido</p>
             )}
           </div>
           <div className="col-12 mt-3">
@@ -78,12 +77,9 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               name="description"
               ref={register({ required: true })}
             />
-            {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            {errors.description && (
+              <p className="ErrorMessage text-danger mb-0 text-left">La descripción es requerida</p>
             )}
-            <p className="ErrorMessage text-danger mb-0 text-left">
-              {errors.email && errors.email.message}
-            </p>
           </div>
           <div className="col-12 mt-3">
             <label htmlFor="price">Imagen del plato</label>
@@ -94,16 +90,7 @@ const RegisterDishesForm = ({ onSubmitCb }) => {
               name="file"
               ref={register({ required: false })}
             />
-            {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
-            )}
-            <p className="ErrorMessage text-danger mb-0 text-left">
-              {errors.email && errors.email.message}
-            </p>
           </div>
-
-          
-
 
           <div className="col-12 mt-3">
             <div className="d-flex flex-column">

@@ -34,7 +34,7 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
         // values.name = "" ;
         // values.description = "";
       } else {
-        closeModal()
+        closeModal();
       }
     } catch (error) {
       console.log(error);
@@ -50,9 +50,12 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
             placeholder="Nombre"
             className="form-control"
             name={`option${index}`}
-            ref={register({ required: false })}
+            ref={register({ required: true })}
           />
         </div>
+        {errors[`option${index}`] && (
+          <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+        )}
         <div className="col-3 ">
           <input
             type="number"
@@ -82,7 +85,7 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
               ref={register({ required: true })}
             />
             {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+              <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p>
             )}
           </div>
 
@@ -93,14 +96,8 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
               placeholder="Descripción"
               className="form-control"
               name="description"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
             />
-            {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
-            )}
-            <p className="ErrorMessage text-danger mb-0 text-left">
-              {errors.email && errors.email.message}
-            </p>
           </div>
           <div className="col-12 mt-3 d-flex flex-column">
             <label htmlFor="price">¿Es obligatorio elegir una opción?</label>
@@ -151,10 +148,18 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
         </div>
 
         <div className="Buttons-container">
-          <Button type="secondary" buttonType="submit" text="Guardar sin opciones" 
-           action={closeModal}/>
-          <Button type="primary" buttonType="submit" text="Guardar y cerrar" 
-           action={() => setShowMoreOptions(false)}/>
+          <Button
+            type="secondary"
+            buttonType="submit"
+            text="Guardar sin opciones"
+            action={closeModal}
+          />
+          <Button
+            type="primary"
+            buttonType="submit"
+            text="Guardar y cerrar"
+            action={() => setShowMoreOptions(false)}
+          />
           <Button
             type="primary"
             buttonType="submit"

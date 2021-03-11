@@ -60,7 +60,7 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
               name="name"
               ref={register({ required: true })}
             />
-           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p> }
           </div>
         </div>
 
@@ -75,7 +75,6 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
               name="price"
               ref={register({ required: false })}
             />
-            {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>}
           </div>
           <div className="col-12 mt-3">
             <label htmlFor="price">Description del Plato</label>
@@ -86,7 +85,7 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
               name="description"
               ref={register({ required: true })}
             />
-            {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+            {errors.description && <p className="ErrorMessage text-danger mb-0 text-left">La descripción es requerida</p> }
             <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
           </div>
           <div className="col-12 mt-3">
@@ -98,12 +97,7 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
               name="file"
               ref={register({ required: false })}
             />
-            {errors.name && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
-            )}
-            <p className="ErrorMessage text-danger mb-0 text-left">
-              {errors.email && errors.email.message}
-            </p>
+           
           </div>
           <div className="col-12 mt-3">
             <div className="d-flex flex-column">

@@ -32,7 +32,7 @@ const CategoryForm = ({ callBack }) => {
             name="name"
             ref={register({ required: true })}
           />
-          {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>}
+          {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Este campo es requerido</p>}
         </div>
         <div className="col mt-3">
           <label htmlFor="name">Descripción de la categoría</label>

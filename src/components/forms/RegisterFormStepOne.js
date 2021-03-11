@@ -37,7 +37,7 @@ const RegisterFormStepOne = ({ setStep }) => {
               name="name"
               ref={register({ required: true })}
             />
-           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p> }
           </div>
           <div className="col">
             <label htmlFor="lastName">Last Name</label>
@@ -47,7 +47,7 @@ const RegisterFormStepOne = ({ setStep }) => {
               name="lastName"
               ref={register({ required: true })}
             />
-            {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
+            {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">Los apellidos son requeridos</p> }
           </div>
         </div>
 
@@ -60,7 +60,7 @@ const RegisterFormStepOne = ({ setStep }) => {
               name="phone"
               ref={register({ required: true })}
             />
-            {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p>}
+            {errors.phone && <p className="ErrorMessage text-danger mb-0 text-left">El teléfono es requerido</p>}
           </div>
           <div className="col">
             <label htmlFor="email">Email address</label>
@@ -72,7 +72,7 @@ const RegisterFormStepOne = ({ setStep }) => {
                 required: "Required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address"
+                  message: "Email no válido"
                 }
               })}
             />
@@ -91,7 +91,7 @@ const RegisterFormStepOne = ({ setStep }) => {
                 required: "Required",
                 minLength: {
                   value: 5,
-                  message: "min length is 5"
+                  message: "Debe tener 5 caracteres"
                 }
               })}
             />

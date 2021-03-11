@@ -25,7 +25,7 @@ const MyDishes = () => {
 
   const deleteDish = (id) => {
     deleteProduct(id)
-      .then((product) => {
+      .then(() => {
         const filteredDishes = dishes.filter((e) => e.id !== id);
         setDishes(filteredDishes);
         setShowDeleteDishModal(false);

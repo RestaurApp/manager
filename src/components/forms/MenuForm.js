@@ -64,7 +64,7 @@ const MenuForm = ({ onPost }) => {
               name="name"
               ref={register({ required: true })}
             />
-           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p> }
+           {errors.name && <p className="ErrorMessage text-danger mb-0 text-left">El nombre es requerido</p> }
           </div>
           <div className="col">
             <div className="d-flex flex-column">
@@ -78,7 +78,7 @@ const MenuForm = ({ onPost }) => {
                 { WEEK_DAYS.map((day, i) => <option key={i} value={day}>{WEEK_SPANISH_DAYS[i]}</option>) }
               </select>
             </div>
-            {errors.lastName && <p className="ErrorMessage text-danger mb-0 text-left">requiered filed</p> }
+         
           </div>
         </div>
         <div className="row mb-3">
