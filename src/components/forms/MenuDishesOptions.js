@@ -4,8 +4,8 @@ import Button from '../misc/Button';
 import { postOptions } from '../../services/OptionService';
 import RadioButton from '../misc/RadioButton';
 
-const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
-  const { handleSubmit, register, errors } = useForm();
+const RegisterOptionsForm = ({ id, closeModal }) => {
+  const { handleSubmit, register, errors, reset } = useForm({ defaultValues: { name: "", description: "" } });
   const [rowOptions, setRowOptions] = useState([]);
   const [state, setState] = useState({
     required: false,
@@ -31,8 +31,7 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
       if (showMoreOptions) {
         setRowOptions([]);
         setState({ required: false, multiple: false });
-        // values.name = "" ;
-        // values.description = "";
+        reset({ ...state });
       } else {
         closeModal();
       }
@@ -148,12 +147,6 @@ const RegisterOptionsForm = ({ onSubmitCb, id, closeModal }) => {
         </div>
 
         <div className="Buttons-container">
-          <Button
-            type="secondary"
-            buttonType="submit"
-            text="Guardar sin opciones"
-            action={closeModal}
-          />
           <Button
             type="primary"
             buttonType="submit"

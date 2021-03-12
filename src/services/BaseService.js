@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { refresh } from './AuthService';
-import { useAuthContext } from '../contexts/AuthContext';
 
 const http = axios.create({
   baseURL: 'https://restaur-api.herokuapp.com/',

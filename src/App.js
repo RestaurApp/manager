@@ -8,6 +8,7 @@ import MyMenus from './screens/MyMenus';
 import MyCategories from './screens/MyCategories';
 import MyTables from './screens/MyTables';
 import MyDishes from './screens/MyDishes';
+import MyProfile from './screens/MyProfile';
 import './App.css';
 import './assets/fonts/css/font.css'
 import  AuthenticatedRoute, {NotAuthenticatedRoute } from './guards/AuthenticatedRoute';
@@ -25,6 +26,7 @@ function App() {
         <AuthenticatedRoute exact path='/mycategories' component={MyCategories}/>
         <AuthenticatedRoute exact path='/mydishes' component={MyDishes}/>
         <AuthenticatedRoute exact path='/mytables' component={MyTables}/>
+        <AuthenticatedRoute exact path='/profile' component={MyProfile}/>
         
         <Redirect to='/dashboard'/> 
       </Switch>

@@ -1,7 +1,6 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, {useState, useCallback } from 'react';
 import SideBar from '../components/misc/SideBar';
 import WhiteBox from '../components/misc/WhiteBox';
-import AuthContext from '../contexts/AuthContext';
 import Modal from '../components/misc/Modal';
 import MenuForm from '../components/forms/MenuForm';
 import AddMenuImg from './../assets/img/addmenu.png'

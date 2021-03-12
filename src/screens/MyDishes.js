@@ -47,7 +47,7 @@ const MyDishes = () => {
     return { products };
   }, []);
 
-  const [loading, data] = useFetchWithLoading(fetchDishes);
+  const [loading] = useFetchWithLoading(fetchDishes);
 
   const onStep1 = (dish) => {
     setDishes([dish, ...dishes]);
@@ -66,20 +66,16 @@ const MyDishes = () => {
       <SideBar activeTab={3} />
       <div className="content p-4 p-md-5 pt-5">
         {showForm && (
-          <Modal
-            title="Modal"
-            description="It's simply dummy text of the printing and typesetting industry."
-            onCloseModal={() => setShowForm(false)}
-          >
+          <Modal title="Crea tu plato" onCloseModal={() => setShowForm(false)}>
             {!step ? (
-              <RegisterDishesForm onSubmitCb={onStep1} />
+              <RegisterDishesForm onSubmitCb={onStep1} closeModal={() => setShowForm(false)} />
             ) : (
               <RegisterOptionsForm
                 id={step}
                 onSubmitCb={(dish) => onStep2(dish)}
                 closeModal={() => {
                   setStep();
-                  setShowForm(false)
+                  setShowForm(false);
                 }}
               />
             )}

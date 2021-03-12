@@ -73,7 +73,7 @@ const EditMenuForm = ({ onPost, onDelete, menu }) => {
     return { products }
   }, [])
   
-  const [loading, data] = useFetchWithLoading(fetchDishes)
+  const [loading] = useFetchWithLoading(fetchDishes)
 
   if (loading) {
     return (

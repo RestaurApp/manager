@@ -49,6 +49,11 @@
   text-align: center;
   margin-top: 1rem;
 }
+.RegisterDishesForm .Buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
 .RegisterForm .logo-container {
   text-align: center;

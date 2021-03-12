@@ -86,7 +86,6 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
               ref={register({ required: true })}
             />
             {errors.description && <p className="ErrorMessage text-danger mb-0 text-left">La descripción es requerida</p> }
-            <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
           </div>
           <div className="col-12 mt-3">
             <label htmlFor="price">Imagen del Plato</label>

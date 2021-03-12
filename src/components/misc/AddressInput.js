@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { StandaloneSearchBox } from '@react-google-maps/api';
 
-const AddressInput = ({ setupPlaceDetail, profileEdit }) => {
+const AddressInput = ({ setupPlaceDetail, profileEdit, placeholder }) => {
   const [query, setQuery] = useState('');
   const autoCompleteRef = useRef(null);
   const autoComplete = useRef(null);
@@ -39,7 +39,7 @@ const AddressInput = ({ setupPlaceDetail, profileEdit }) => {
         name="address"
         id={profileEdit ? 'inputAddressEdit' : ''}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder='Introduce dirección'
+        placeholder={placeholder ? placeholder : 'Introduce dirección'}
         value={query}
       />
     </StandaloneSearchBox>

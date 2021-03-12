@@ -6,7 +6,7 @@ import Modal from '../components/misc/Modal';
 import DishRow from '../components/misc/DishRow';
 
 import useFetchWithLoading from '../hooks/useFetchWithLoading';
-import { getProductsFromCategory, deleteProduct, getProducts, updateProduct } from '../services/ProductService';
+import { getProductsFromCategory, getProducts, updateProduct } from '../services/ProductService';
 import { getCategories } from '../services/CategoryService';
 import SpinnerModal from '../components/misc/SpinnerModal';
 import Button from '../components/misc/Button';

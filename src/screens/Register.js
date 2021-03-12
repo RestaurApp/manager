@@ -5,7 +5,6 @@ import bgGray from '../assets/img/background.png'
 import MobileImg from '../assets/img/mobile.png'
 import AuthContext from '../contexts/AuthContext';
 import '../assets/stylesheets/RegisterScreen.css'
-import { Redirect } from 'react-router-dom';
 
 const RegisterScreen = () => {
   const { currentUser } = useContext(AuthContext) 

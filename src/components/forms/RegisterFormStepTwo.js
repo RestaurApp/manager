@@ -8,8 +8,9 @@ import Button from './../misc/Button';
 import AuthContext from '../../contexts/AuthContext';
 import '../../assets/stylesheets/RegisterForm.css';
 
-const RegisterForm = () => {
+const RegisterForm = ({ profile }) => {
   const { setAuthUser, currentUser } = useContext(AuthContext);
+  const restaurant = currentUser?.restaurants[0];
   const { handleSubmit, register, errors } = useForm();
   const [redirect, setRedirect] = useState();
   const [placeDetail, setPlaceDetail] = useState();
@@ -38,7 +39,7 @@ const RegisterForm = () => {
   const onSubmit = async (values) => {
     try {
       const form = { ...values, ...placeDetail };
-     
+
       const formData = new FormData();
       formData.append('picture', value);
 
@@ -56,8 +57,8 @@ const RegisterForm = () => {
         },
       });
       await createTables(tableBody);
-      const response = value && await updateRestaurant(result.data.id, formData);
-      
+      const response = value && (await updateRestaurant(result.data.id, formData));
+
       setAuthUser({
         ...currentUser,
         newUser: {
@@ -75,28 +76,38 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="RegisterForm">
+    <div className="RegisterForm" style={{ paddingTop: profile ? '0rem' : '3rem' }}>
       <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
         <div className="row">
-          <div className="col-12 mb-4">
-            <h2 className="StepOneTitle">
-              Crea tu restaurante con <span>MyMenus</span>
-            </h2>
-            <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
-          </div>
+          {!profile ? (
+            <div className="col-12 mb-4">
+              <h2 className="StepOneTitle">
+                Crea tu restaurante con <span>MyMenus</span>
+              </h2>
+              <p className="StepOneDescription">Regístrate para crear tu perfil privado</p>
+            </div>
+          ) : (
+            <div className="col-12 mb-4">
+              <p className="StepOneDescription">Actualiza los datos de tu restaurante</p>
+            </div>
+          )}
           <div className="col">
             <label htmlFor="name">Nombre restaurante</label>
             <input
               placeholder="Nombre"
               className="form-control"
               name="name"
+              value={restaurant.name}
               ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
           <div className="col">
             <label htmlFor="lastname">Dirección</label>
-            <AddressInput setupPlaceDetail={setupPlaceDetail} />
+            <AddressInput
+              placeholder={restaurant?.address && restaurant?.address[0].formattedAddress}
+              setupPlaceDetail={setupPlaceDetail}
+            />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
         </div>
@@ -108,6 +119,7 @@ const RegisterForm = () => {
               placeholder="Teléfono"
               className="form-control"
               name="phone"
+              value={restaurant.phone}
               ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
@@ -118,6 +130,7 @@ const RegisterForm = () => {
               placeholder="Email del restaurante"
               className="form-control"
               name="email"
+              value={restaurant.email}
               ref={register({
                 required: 'Required',
                 pattern: {
@@ -139,6 +152,8 @@ const RegisterForm = () => {
               className="form-control"
               name="tablesNumber"
               type="number"
+              disabled={profile}
+              value={restaurant.tablesNumber}
               ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p>
@@ -150,6 +165,7 @@ const RegisterForm = () => {
               placeholder="Tipo de comida"
               className="form-control"
               name="foodType"
+              value={restaurant.foodType}
               ref={register({ required: false })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p>
@@ -168,10 +184,11 @@ const RegisterForm = () => {
             />
           </div>
         </div>
-
-        <div className="Buttons-container">
-          <Button buttonType="submit" text="Registrar" type="primary" />
-        </div>
+        {!profile && (
+          <div className="Buttons-container">
+            <Button buttonType="submit" text="Registrar" type="primary" />
+          </div>
+        )}
       </form>
     </div>
   );
