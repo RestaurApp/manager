@@ -8,9 +8,9 @@ import Button from './../misc/Button';
 import AuthContext from '../../contexts/AuthContext';
 import '../../assets/stylesheets/RegisterForm.css';
 
-const RegisterForm = ({ profile }) => {
+const RegisterForm = ({ profile, handleChange }) => {
   const { setAuthUser, currentUser } = useContext(AuthContext);
-  const restaurant = currentUser?.restaurants[0];
+  const restaurant = currentUser?.restaurants && currentUser?.restaurants[0];
   const { handleSubmit, register, errors } = useForm();
   const [redirect, setRedirect] = useState();
   const [placeDetail, setPlaceDetail] = useState();
@@ -34,7 +34,12 @@ const RegisterForm = ({ profile }) => {
     });
   };
 
-  const fileUpload = (event) => event.target.files[0] && setValue(event.target.files[0]);
+  const fileUpload = (event) => {
+    if (event.target.files[0]) {
+      setValue(event.target.files[0]);
+      profile && handleChange(null, true, event.target.files[0]);
+    }
+  };
 
   const onSubmit = async (values) => {
     try {
@@ -49,35 +54,34 @@ const RegisterForm = ({ profile }) => {
         restaurantId: result.data.id,
         number: result.data.tablesNumber,
       };
-      setAuthUser({
-        ...currentUser,
-        newUser: {
-          ...currentUser.newUser,
-          restaurants: [result.data],
-        },
-      });
+      setAuthUser({...currentUser, restaurants: [result.data]})
+     
       await createTables(tableBody);
       const response = value && (await updateRestaurant(result.data.id, formData));
 
-      setAuthUser({
-        ...currentUser,
-        newUser: {
-          ...currentUser.newUser,
-          restaurants: [response.data],
-        },
-      });
-      setRedirect(true);
+      setAuthUser({...currentUser, restaurants: [response.data]})
+     
     } catch (error) {
       console.log(error);
+    } finally {
+      setRedirect(true);
     }
   };
+
+  const profileChange = (e) => {
+    profile && handleChange(e, true)
+  }
   if (redirect) {
     return <Redirect to="/login" />;
   }
 
   return (
     <div className="RegisterForm" style={{ paddingTop: profile ? '0rem' : '3rem' }}>
-      <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        encType="multipart/form-data"
+        style={{ width: profile ? '100%' : 'auto' }}
+      >
         <div className="row">
           {!profile ? (
             <div className="col-12 mb-4">
@@ -97,15 +101,17 @@ const RegisterForm = ({ profile }) => {
               placeholder="Nombre"
               className="form-control"
               name="name"
-              value={restaurant.name}
+              value={restaurant?.name}
               ref={register({ required: true })}
+              onChange={(e) => profileChange(e, true)}
             />
+
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
           <div className="col">
             <label htmlFor="lastname">Dirección</label>
             <AddressInput
-              placeholder={restaurant?.address && restaurant?.address[0].formattedAddress}
+              placeholder={restaurant?.address.length > 0 && restaurant?.address[0].formattedAddress ? restaurant?.address[0].formattedAddress : 'Introduce tu dirección'}
               setupPlaceDetail={setupPlaceDetail}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
@@ -119,8 +125,9 @@ const RegisterForm = ({ profile }) => {
               placeholder="Teléfono"
               className="form-control"
               name="phone"
-              value={restaurant.phone}
+              value={restaurant?.phone}
               ref={register({ required: true })}
+              onChange={(e) => profileChange(e, true)}
             />
             <p className="text-danger text-left">{errors.name && errors.name.message}</p>
           </div>
@@ -130,7 +137,8 @@ const RegisterForm = ({ profile }) => {
               placeholder="Email del restaurante"
               className="form-control"
               name="email"
-              value={restaurant.email}
+              value={restaurant?.email}
+              onChange={(e) => profileChange(e, true)}
               ref={register({
                 required: 'Required',
                 pattern: {
@@ -151,9 +159,10 @@ const RegisterForm = ({ profile }) => {
               placeholder="0"
               className="form-control"
               name="tablesNumber"
+              onChange={(e) => profileChange(e, true)}
               type="number"
               disabled={profile}
-              value={restaurant.tablesNumber}
+              value={restaurant?.tablesNumber}
               ref={register({ required: true })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p>
@@ -164,8 +173,9 @@ const RegisterForm = ({ profile }) => {
             <input
               placeholder="Tipo de comida"
               className="form-control"
+              onChange={(e) => profileChange(e, true)}
               name="foodType"
-              value={restaurant.foodType}
+              value={restaurant?.foodType}
               ref={register({ required: false })}
             />
             <p className="text-danger text-left">{errors.email && errors.email.message}</p>

@@ -5,14 +5,14 @@ import { registerUser } from '../../services/AuthService';
 import AuthContext from '../../contexts/AuthContext';
 import '../../assets/stylesheets/RegisterForm.css';
 
-const RegisterFormStepOne = ({ setStep, profile }) => {
+const RegisterFormStepOne = ({ setStep, profile, handleChange }) => {
   const { handleSubmit, register, errors } = useForm();
   const { setAuthUser, currentUser } = useContext(AuthContext);
 
   const onSubmit = (values) => {
     registerUser(values)
       .then((result) => {
-        setAuthUser(result.data);
+        setAuthUser({...result.data.newUser, token: result.data.token, refreshToken: result.data.refreshToken})
         setStep(2);
       })
       .catch((e) => console.log(e));
@@ -44,7 +44,8 @@ const RegisterFormStepOne = ({ setStep, profile }) => {
               placeholder="Nombre"
               className="form-control"
               name="name"
-              value={currentUser.name}
+              onChange={handleChange}
+              value={currentUser?.name}
               ref={register({ required: true })}
             />
             {errors.name && (
@@ -57,7 +58,8 @@ const RegisterFormStepOne = ({ setStep, profile }) => {
               placeholder="lastName"
               className="form-control"
               name="lastName"
-              value={currentUser.lastName}
+              onChange={handleChange}
+              value={currentUser?.lastName}
               ref={register({ required: true })}
             />
             {errors.lastName && (
@@ -74,8 +76,9 @@ const RegisterFormStepOne = ({ setStep, profile }) => {
             <input
               placeholder="phone"
               className="form-control"
-              value={currentUser.phone}
+              value={currentUser?.phone}
               name="phone"
+              onChange={handleChange}
               ref={register({ required: true })}
             />
             {errors.phone && (
@@ -89,7 +92,7 @@ const RegisterFormStepOne = ({ setStep, profile }) => {
               className="form-control"
               name="email"
               disabled={profile}
-              value={currentUser.email}
+              value={currentUser?.email}
               ref={register({
                 required: 'Required',
                 pattern: {

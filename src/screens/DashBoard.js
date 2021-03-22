@@ -10,8 +10,8 @@ import { Redirect } from 'react-router-dom';
 
 const DashBoard = () => {
   const { currentUser } = useContext(AuthContext) 
-  const [myMenus, setMymenus] = useState(false)
-  const [myDishes, setMydishes] = useState(false)
+  const [myMenus, setMyMenus] = useState(false)
+  const [myDishes, setMyDishes] = useState(false)
 
   if (myMenus) return <Redirect to="/mymenus"/>
 
@@ -29,7 +29,7 @@ const DashBoard = () => {
           <div className="row mt-5">
             <div className="col-6">
               <Card
-                action={() => setMymenus(true)}
+                action={() => setMyMenus(true)}
                 img={{ src: CreateMenuImg, alt: 'create menu' }}
                 title="Configura tu menú"
                 description="Crea platos, menús, ofertas y secciones para tus comensales."
@@ -37,7 +37,7 @@ const DashBoard = () => {
             </div>
             <div className="col-6">
               <Card
-                action={() => setMydishes(true)}
+                action={() => setMyDishes(true)}
                 img={{ src: seeMenusImg, alt: 'create menu' }}
                 title="Configura tu menú"
                 description="Crea platos, menús, ofertas y secciones para tus comensales."
