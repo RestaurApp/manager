@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button'
 import '../../assets/stylesheets/DishRow.css'
 
-const DefaultRow = ({ selected, title, setShowModal, addRow, addDishAction, dishId }) => {
+const DefaultRow = ({ selected, title, setShowModal, addRow, addDishAction, dishId, option, optionAction }) => {
   return (
     <div className="TableRow row">
     <div className="ImgTableRow col-2">
@@ -12,6 +12,9 @@ const DefaultRow = ({ selected, title, setShowModal, addRow, addDishAction, dish
       {!addRow 
         ? 
         <div className="ActionTableRow col-3 d-flex justify-content-end ">
+          {option &&  <div className="DishRowButton bg-light-green mr-2" onClick={() => optionAction(true)}>
+            <i className="icon-pencil"/>
+          </div>}
           <div className="DishRowButton bg-cancel" onClick={() => setShowModal(true)}>
             <i className="icon-cancel"/>
           </div>
@@ -32,10 +35,10 @@ const DefaultRow = ({ selected, title, setShowModal, addRow, addDishAction, dish
   )
 }
 
-const CancelRow = ({ dish, onDelete, callBackFn }) => {
+const CancelRow = ({ dish, onDelete, callBackFn, option }) => {
   return (
     <div className="CancelRow">
-      <p className="m-0">¿Estas seguro de eliminar el plato <span className="font-weight-bold">{dish.name}</span>?</p>
+      <p className="m-0">¿Estas seguro de eliminar {option ? "la opción ": "el plato "}<span className="font-weight-bold">{dish.name}</span>?</p>
       <Button
         small
         text="Eliminar" 
@@ -46,13 +49,13 @@ const CancelRow = ({ dish, onDelete, callBackFn }) => {
   )
 }
 
-const DishRow = ({ dish, onDelete, addDishAction, addRow, selected, defaultDeleted=false }) => {
+const DishRow = ({ dish, onDelete, addDishAction, addRow, selected, defaultDeleted=false, option, optionAction }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(defaultDeleted)
   return (
     <div className={`DishRow ${selected ? 'row-selected' : ''}`}>
       {selected && <div className="selected-div-row">Seleccionado</div>}
-      <DefaultRow addRow={addRow} selected={selected} dishId={dish.id} title={dish.name} addDishAction={addDishAction} setShowModal={setShowDeleteModal} />
-      {showDeleteModal && !selected && <CancelRow callBackFn={setShowDeleteModal} dish={dish} onDelete={onDelete}/>}
+      <DefaultRow addRow={addRow} selected={selected} dishId={dish.id} title={dish.name} addDishAction={addDishAction} setShowModal={setShowDeleteModal} option={option} optionAction={optionAction} />
+      {showDeleteModal && !selected && <CancelRow callBackFn={setShowDeleteModal} dish={dish} onDelete={onDelete} option={option} />}
     </div>
   );
 };

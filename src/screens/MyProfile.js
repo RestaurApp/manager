@@ -29,14 +29,16 @@ const MyProfile = () => {
 
   const onSubmit = async () => {
     try {
-      // await updateUser(currentUser.id, currentUser);
       await updateRestaurant(currentUser.restaurants[0].id, currentUser.restaurants[0]);
       if (file) {
         const formData = new FormData();
         formData.append('picture', file);
         const response = await updateRestaurant(currentUser.restaurants[0].id, formData);
         setAuthUser({...currentUser, restaurants: [response.data]})
-      }
+      } 
+      delete currentUser["restaurants"]
+      const responseUser = await updateUser(currentUser.id, currentUser);
+      setAuthUser(...currentUser, ...responseUser.data)
     } catch (error) {
       console.log(error);
     }

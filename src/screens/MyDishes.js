@@ -9,6 +9,7 @@ import { getProducts, deleteProduct } from '../services/ProductService';
 import { getCategories } from '../services/CategoryService';
 import SpinnerModal from '../components/misc/SpinnerModal';
 import Button from '../components/misc/Button';
+import DefaultImg from '../assets/img/default-img.png';
 import '../assets/stylesheets/MyDishes.css';
 
 import { PaginatedList } from 'react-paginated-list';
@@ -146,11 +147,15 @@ const MyDishes = () => {
                       return (
                         <tr key={i} className="TableDishRow">
                           <td>
-                            <div
-                              className={`DishStateCircle ${
-                                dish.state === 'active' ? 'bg-active' : ''
-                              }`}
-                            ></div>
+                            <img
+                              src={dish.picture || DefaultImg}
+                              alt="img"
+                              className="Dish-td-img"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = DefaultImg;
+                              }}
+                            />
                           </td>
                           <td>
                             <p className="m-0 Dish-td-name ">{dish.name}</p>
@@ -162,7 +167,10 @@ const MyDishes = () => {
                             </p>
                           </td>
                           <td>{dish.state}</td>
-                          <td className="d-flex justify-content-center">
+                          <td
+                            className="d-flex justify-content-center"
+                            style={{ padding: '1rem 0' }}
+                          >
                             <div
                               className="DishRowButton bg-light-green mr-1"
                               onClick={() => {

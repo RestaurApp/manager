@@ -103,7 +103,10 @@ const MyCategories = () => {
               return (
                 <div className="col-md-6 col-lg-4 mb-3" key={i}>
                   <div className="card">
-                    <img className="card-img-top" src={category.picture} alt="Card caption" />
+                    <img className="card-img-top" src={img} alt="Card caption" onError={e => {
+                        e.target.onerror = null;
+                        e.target.src = DefaultImg;
+                      }} />
                     <div className="card-body">
                       <h5>{category.name}</h5>
                       <p className="text-small">{category.description}</p>

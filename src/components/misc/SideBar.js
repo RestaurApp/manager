@@ -1,8 +1,7 @@
 import React from 'react';
-// import UserImg from '../../assets/img/img_cook_hat.svg'
-import '../../assets/stylesheets/SideBar.css';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+import '../../assets/stylesheets/SideBar.css';
 
 const SideBar = ({ activeTab }) => {
   const { currentUser } = useAuthContext();
@@ -14,9 +13,9 @@ const SideBar = ({ activeTab }) => {
           <Link to="/profile">
             <div
               className="img"
-              style={{ backgroundImage: `url(${currentUser.restaurants[0].picture}`, border: activeTab === 0 ?  "2px solid red" : "2px solid white"}}
+              style={{ backgroundImage: `url(${currentUser?.restaurants?.length > 0 && currentUser?.restaurants[0].picture}`, border: activeTab === 0 ?  "2px solid red" : "2px solid white"}}
             ></div>
-            <h3>{currentUser?.restaurants[0].name}</h3>
+            <h3>{currentUser?.restaurants?.length > 0 && currentUser?.restaurants[0].name}</h3>
           </Link>
         </div>
       </div>

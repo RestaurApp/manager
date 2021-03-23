@@ -4,12 +4,12 @@ import Button from '../misc/Button';
 import { postOptions } from '../../services/OptionService';
 import RadioButton from '../misc/RadioButton';
 
-const RegisterOptionsForm = ({ id, closeModal}) => {
-  const { handleSubmit, register, errors, reset } = useForm({ defaultValues: { name: "", description: "" } });
+const EditOptionsForm = ({ id, closeModal, update}) => {
+  const { handleSubmit, register, errors, reset } = useForm({ defaultValues: { name: update.name, description:update.description } });
   const [rowOptions, setRowOptions] = useState([]);
   const [state, setState] = useState({
-    required: false,
-    multiple: false,
+    required: update.required,
+    multiple: update.multiple,
   });
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const countOptions = useRef(0);
@@ -143,6 +143,33 @@ const RegisterOptionsForm = ({ id, closeModal}) => {
               <i className="icon-pencil" />
             </div>
           </div>
+          {update.options?.map((item, index) => (
+            <div className="row mx-0 mt-3" key={item._id}>
+            <div className="col-8 ">
+              <input
+                type="text"
+                placeholder="Nombre"
+                className="form-control"
+                name={`option${index}`}
+                defaultValue={item.name}
+                ref={register({ required: true })}
+              />
+            </div>
+            {errors[`option${index}`] && (
+              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+            )}
+            <div className="col-3 ">
+              <input
+                type="number"
+                placeholder="Precio"
+                className="form-control"
+                name={`optionPrice${index}`}
+                defaultValue={item.price}
+                ref={register({ required: false })}
+              />
+            </div>
+          </div>
+          ))}
           {rowOptions}
         </div>
 
@@ -150,19 +177,14 @@ const RegisterOptionsForm = ({ id, closeModal}) => {
           <Button
             type="primary"
             buttonType="submit"
-            text="Guardar y cerrar"
+            text="Actualizar"
             action={() => setShowMoreOptions(false)}
           />
-          <Button
-            type="primary"
-            buttonType="submit"
-            text="Añadir más opciones"
-            action={() => setShowMoreOptions(true)}
-          />
+         
         </div>
       </form>
     </div>
   );
 };
 
-export default RegisterOptionsForm;
+export default EditOptionsForm;

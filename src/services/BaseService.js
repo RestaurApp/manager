@@ -24,14 +24,13 @@ http.interceptors.response.use(
   (response) => {
     return response;
   },
-  async function (error) {
-    try {
-      const originalRequest = error.config;
-      if (error.response.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        const user = JSON.parse(localStorage.getItem('restaurappUser'));
-        const access_token = await refresh({ refreshToken: user.refreshToken });
-        if (access_token) {
+  function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const user = JSON.parse(localStorage.getItem('restaurappUser'));
+      refresh({ refreshToken: user.refreshToken })
+        .then((access_token) => {
           const data = {
             ...user,
             token: access_token.data.token,
@@ -40,16 +39,13 @@ http.interceptors.response.use(
           localStorage.setItem('restaurappUser', JSON.stringify(data));
           http.defaults.headers.common['Authorization'] = access_token.token;
           return http(originalRequest);
-        } else {
-          console.log('object');
-          localStorage.removeItem('restaurappUser');
-        }
-      }
-      return Promise.reject(error);
-    } catch (error) {
-      localStorage.clear();
-      window.location.assign('/login');
+        })
+        .catch((error) => {
+          localStorage.clear();
+          window.location.assign('/login');
+        });
     }
+    return Promise.reject(error);
   }
 );
 

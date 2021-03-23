@@ -15,6 +15,13 @@
   color: white;
   border: none;
 }
+.Button-secondary {
+  background-color: var(--light-green);
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem !important;
+  border-radius: 2rem;
+  color: white;
+  border: none;
+}
 
 a.Button-primary {
   display: block;
