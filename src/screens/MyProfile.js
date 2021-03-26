@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import SideBar from '../components/misc/SideBar';
 import WhiteBox from '../components/misc/WhiteBox';
 import RegisterFormStepOne from '../components/forms/RegisterFormStepOne';
@@ -13,6 +14,7 @@ import '../assets/stylesheets/RegisterScreen.css';
 const MyProfile = () => {
   const [file, setFile] = useState();
   const { setAuthUser, currentUser } = useContext(AuthContext);
+  const history = useHistory();
   const handleChange = async (e, isRestaurant, file) => {
     if (file) {
       setFile(file);
@@ -34,13 +36,15 @@ const MyProfile = () => {
         const formData = new FormData();
         formData.append('picture', file);
         const response = await updateRestaurant(currentUser.restaurants[0].id, formData);
-        setAuthUser({...currentUser, restaurants: [response.data]})
-      } 
-      delete currentUser["restaurants"]
+        setAuthUser({ ...currentUser, restaurants: [response.data] });
+      }
+      delete currentUser['restaurants'];
       const responseUser = await updateUser(currentUser.id, currentUser);
-      setAuthUser(...currentUser, ...responseUser.data)
+      setAuthUser({...currentUser, ...responseUser.data});
     } catch (error) {
       console.log(error);
+    } finally {
+      history.push('/dashboard');
     }
   };
 

@@ -1,35 +1,43 @@
-import React, { useContext } from 'react';
-import IntroHome from '../assets/img/introHome.svg'
-import BackGroundLogin from '../assets/img/bg.jpg'
+import React, { useContext, useState } from 'react';
+import IntroHome from '../assets/img/introHome.svg';
+import BackGroundLogin from '../assets/img/bg.jpg';
 import Button from '../components/misc/Button';
 import { useForm } from 'react-hook-form';
 import { loginUser } from '../services/AuthService';
 import AuthContext from '../contexts/AuthContext';
-import '../assets/stylesheets/RegisterForm.css'
-import '../assets/stylesheets/Login.css'
+import '../assets/stylesheets/RegisterForm.css';
+import '../assets/stylesheets/Login.css';
 import { Redirect } from 'react-router-dom';
 
 const Home = () => {
   const { handleSubmit, register, errors } = useForm();
-  const { setAuthUser, currentUser } = useContext(AuthContext) 
+  const { setAuthUser, currentUser } = useContext(AuthContext);
+  const [errorApi, setErrorApi] = useState();
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     loginUser(values)
-      .then(result => {
-        localStorage.setItem('restaurappUser', JSON.stringify({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken}));
-        setAuthUser({...result.data.userInfo, token: result.data.token, refreshToken: result.data.refreshToken})
+      .then((result) => {
+        setAuthUser({
+          ...result.data.userInfo,
+          token: result.data.token,
+          refreshToken: result.data.refreshToken,
+        });
       })
-      .catch(err => console.log(err))
+      .catch((err) => {
+        if(err.response.data.message === 'Unauthorized'){
+        setErrorApi(true);
+        }
+      });
   };
 
   if (currentUser) {
-    return <Redirect to="/dashboard"/>
+    return <Redirect to="/dashboard" />;
   }
-  
+
   return (
-    <div className="Login" style={{ background: `url(${BackGroundLogin})`}}>
+    <div className="Login" style={{ background: `url(${BackGroundLogin})` }}>
       <div className="Login-wrapper">
-      <img className="Homeimage" src={IntroHome} alt="intro-home" />
+        <img className="Homeimage" src={IntroHome} alt="intro-home" />
         <div className="RegisterForm LoginForm">
           <form onSubmit={handleSubmit(onSubmit)} className="w-100">
             <div className="row mb-3">
@@ -40,14 +48,16 @@ const Home = () => {
                   className="form-control"
                   name="email"
                   ref={register({
-                    required: "Required",
+                    required: 'Required',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "invalid email address"
-                    }
+                      message: 'invalid email address',
+                    },
                   })}
                 />
-                <p className="ErrorMessage text-danger mb-0 text-left">{errors.email && errors.email.message}</p> 
+                <p className="ErrorMessage text-danger mb-0 text-left">
+                  {errors.email && errors.email.message}
+                </p>
               </div>
             </div>
             <div className="row">
@@ -60,11 +70,18 @@ const Home = () => {
                   name="password"
                   ref={register()}
                 />
-                <p className="ErrorMessage text-danger mb-0 text-left">{errors.password && errors.password.message}</p>
+                <p className="ErrorMessage text-danger mb-0 text-left">
+                  {errors.password && errors.password.message}
+                </p>
+                {errorApi && (
+                  <p className="ErrorMessage text-danger mb-0 text-left">
+                    email y/o password incorrectos
+                  </p>
+                )}
               </div>
             </div>
             <div className="Buttons-container mt-4">
-              <Button type="primary" buttonType="submit" text="Login"/>
+              <Button type="primary" buttonType="submit" text="Login" />
             </div>
           </form>
         </div>

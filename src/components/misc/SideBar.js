@@ -13,7 +13,7 @@ const SideBar = ({ activeTab }) => {
           <Link to="/profile">
             <div
               className="img"
-              style={{ backgroundImage: `url(${currentUser?.restaurants?.length > 0 && currentUser?.restaurants[0].picture}`, border: activeTab === 0 ?  "2px solid red" : "2px solid white"}}
+              style={{ backgroundImage: `url(${currentUser?.restaurants && currentUser?.restaurants[0].picture}`, border: activeTab === 0 ?  "2px solid red" : "2px solid white"}}
             ></div>
             <h3>{currentUser?.restaurants?.length > 0 && currentUser?.restaurants[0].name}</h3>
           </Link>

@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../misc/Button';
-import { postOptions } from '../../services/OptionService';
+import { postOptions, updateOption } from '../../services/OptionService';
 import RadioButton from '../misc/RadioButton';
 
-const EditOptionsForm = ({ id, closeModal, update}) => {
-  const { handleSubmit, register, errors, reset } = useForm({ defaultValues: { name: update.name, description:update.description } });
+const EditOptionsForm = ({ id, closeModal, update }) => {
+  const { handleSubmit, register, errors, reset } = useForm({
+    defaultValues: { name: update.name, description: update.description },
+  });
   const [rowOptions, setRowOptions] = useState([]);
   const [state, setState] = useState({
     required: update.required,
@@ -14,20 +16,28 @@ const EditOptionsForm = ({ id, closeModal, update}) => {
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const countOptions = useRef(0);
 
+  const [listOptions, setListOptions] = useState(update.options || [])
+
   const onSubmit = async (values) => {
     try {
       const data = {
         name: values.name,
         description: values.description,
         ...state,
-        options: rowOptions.map((el, index) => {
-          return {
-            name: values[`option${index + 1}`],
-            price: values[`optionPrice${index + 1}`],
-          };
-        }),
+        options: [
+          ...listOptions,
+          ...rowOptions.map((el, index) => {
+            return {
+              name: values[`option${index + 1}`],
+              price: values[`optionPrice${index + 1}`],
+            };
+          }),
+        ],
       };
-      await postOptions(id, data);
+      update.update ? await updateOption(id, data) : await postOptions(update.dishId, data);
+    } catch (error) {
+      console.log(error);
+    } finally {
       if (showMoreOptions) {
         setRowOptions([]);
         setState({ required: false, multiple: false });
@@ -35,8 +45,6 @@ const EditOptionsForm = ({ id, closeModal, update}) => {
       } else {
         closeModal();
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -143,32 +151,35 @@ const EditOptionsForm = ({ id, closeModal, update}) => {
               <i className="icon-pencil" />
             </div>
           </div>
-          {update.options?.map((item, index) => (
-            <div className="row mx-0 mt-3" key={item._id}>
-            <div className="col-8 ">
-              <input
-                type="text"
-                placeholder="Nombre"
-                className="form-control"
-                name={`option${index}`}
-                defaultValue={item.name}
-                ref={register({ required: true })}
-              />
+          {listOptions?.map((item, index) => (
+            <div className="row mx-0 mt-3 align-items-center" key={item._id}>
+              <div className="col-7 ">
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  className="form-control"
+                  name={`option${index}`}
+                  defaultValue={item.name}
+                  ref={register({ required: true })}
+                />
+              </div>
+              {errors[`option${index}`] && (
+                <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
+              )}
+              <div className="col-3 ">
+                <input
+                  type="number"
+                  placeholder="Precio"
+                  className="form-control"
+                  name={`optionPrice${index}`}
+                  defaultValue={item.price}
+                  ref={register({ required: false })}
+                />
+              </div>
+              <div className="col-1" onClick={() => setListOptions(prev => prev.filter(el => el._id !== item._id))}>
+                <i className="icon-cancel" />
+              </div>
             </div>
-            {errors[`option${index}`] && (
-              <p className="ErrorMessage text-danger mb-0 text-left">Requiered fill</p>
-            )}
-            <div className="col-3 ">
-              <input
-                type="number"
-                placeholder="Precio"
-                className="form-control"
-                name={`optionPrice${index}`}
-                defaultValue={item.price}
-                ref={register({ required: false })}
-              />
-            </div>
-          </div>
           ))}
           {rowOptions}
         </div>
@@ -180,7 +191,6 @@ const EditOptionsForm = ({ id, closeModal, update}) => {
             text="Actualizar"
             action={() => setShowMoreOptions(false)}
           />
-         
         </div>
       </form>
     </div>

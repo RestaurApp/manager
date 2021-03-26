@@ -56,6 +56,7 @@ const MyDishes = () => {
   };
   const onStep2 = (dish) => {
     setDishes([dish, ...dishes]);
+    console.log("object", dish);
     setShowForm(false);
   };
   if (loading) {

@@ -5,7 +5,7 @@ import AnimatedMulti from './MultiSelect';
 import DishRow from '../misc/DishRow';
 import { ALLERGENS } from '../../constants/constants';
 import { updateProduct } from '../../services/ProductService';
-import { updateOption } from '../../services/OptionService';
+import { deleteOption } from '../../services/OptionService';
 import EditOptionsForm from './EditDishesOptions';
 
 const EditDishesForm = ({ onSubmitCb, dish }) => {
@@ -52,10 +52,15 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
     }
   };
 
-  const deleteOption = (id) => {
-    console.log(id);
+  const removeOption = async (id) => {
+    try {
+      await deleteOption(id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setModalOptions(false);
+    }
   };
-  const onUpdateOption = () => {};
 
   const ModalOptions = () => (
     <div className="col-12 mt-3">
@@ -66,17 +71,28 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
             <DishRow
               key={i}
               dish={option}
-              onDelete={deleteOption}
+              onDelete={removeOption}
               option
               optionAction={() => {
                 setModalOptions(false);
-                setShowOption(option);
+                setShowOption({ ...option, update: true });
               }}
             />
           );
         })
       ) : (
-        <p className="m-0 text-center mt-2 p-2">"Este plato no tiene extras"</p>
+        <div className="row m-0 justify-content-between">
+          <p className="m-0 text-center mt-2 p-2">"Este plato no tiene extras"</p>
+          <div
+            className="DishRowButton bg-light-green mr-2 mt-2"
+            onClick={() => {
+              setModalOptions(false);
+              setShowOption({ update: false, dishId: dish.id, options: [] });
+            }}
+          >
+            <i className="icon-pencil" />
+          </div>
+        </div>
       )}
     </div>
   );
@@ -88,7 +104,6 @@ const EditDishesForm = ({ onSubmitCb, dish }) => {
       ) : showOption ? (
         <EditOptionsForm
           id={showOption.id}
-          onSubmitCb={(option) => onUpdateOption(option)}
           closeModal={() => setShowOption(false)}
           update={showOption}
         />
