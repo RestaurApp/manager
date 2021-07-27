@@ -50,6 +50,12 @@ const SideBar = ({ activeTab }) => {
             Mesas
           </Link>
         </li>
+        <li className={`c-gray ${activeTab === 5 ? 'active' : ''}`}>
+          <Link to="/cash">
+            <i className="icon-table mr-2" />
+            Caja
+          </Link>
+        </li>
       </ul>
     </nav>
   );
